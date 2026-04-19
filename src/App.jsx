@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 
-const roleTabs = [
-  { id: "student", label: "Student" },
-  { id: "advisor", label: "Advisor" },
-  { id: "admin", label: "Admin" },
-];
-
 const menus = {
   student: ["Home", "My Projects", "Create Project", "Find Advisor", "Profile"],
   advisor: ["Home", "My Projects", "Incoming Requests", "Profile"],
@@ -126,24 +120,41 @@ const announcementFormInitial = {
   body: "",
 };
 
-const privilegedRolePasswords = {
-  advisor: "advisor2026",
-  admin: "admin2026",
-};
-
-const signupFormInitial = {
-  fullName: "",
+const loginFormInitial = {
   email: "",
   password: "",
-  department: "",
-  rolePassword: "",
 };
+
+const demoAccounts = [
+  {
+    email: "sevinc.yigit@ogr.university.edu.tr",
+    password: "123456",
+    role: "student",
+    name: "Sevinc Yigit",
+    department: "Software Engineering",
+    year: "3",
+  },
+  {
+    email: "sila.korklubasoglu@university.edu.tr",
+    password: "123456",
+    role: "advisor",
+    name: "Sila Korklubasoglu",
+    department: "Software Engineering",
+    title: "Professor",
+  },
+  {
+    email: "admin@university.edu.tr",
+    password: "123456",
+    role: "admin",
+    name: "System Admin",
+    department: "Project Coordination Office",
+  },
+];
 
 function App() {
   const [role, setRole] = useState("student");
   const [view, setView] = useState("Home");
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [authMode, setAuthMode] = useState("login");
+  const [loggedIn, setLoggedIn] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [projects, setProjects] = useState(initialProjects);
   const [announcements, setAnnouncements] = useState(initialAnnouncements);
@@ -151,10 +162,11 @@ function App() {
   const [requests, setRequests] = useState(initialRequests);
   const [advisorAccounts, setAdvisorAccounts] = useState(initialAdvisorAccounts);
   const [selectedProjectId, setSelectedProjectId] = useState(initialProjects[0].id);
-  const [message, setMessage] = useState("Buttons now update the interface. You can switch roles and pages.");
+  const [message, setMessage] = useState("Enter your university email to sign in. The system will determine your role automatically.");
   const [projectForm, setProjectForm] = useState(emptyForm);
   const [announcementForm, setAnnouncementForm] = useState(announcementFormInitial);
-  const [signupForm, setSignupForm] = useState(signupFormInitial);
+  const [loginForm, setLoginForm] = useState(loginFormInitial);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const selectedProject = projects.find((project) => project.id === selectedProjectId) || null;
   const normalizedSearch = searchText.trim().toLowerCase();
@@ -175,37 +187,33 @@ function App() {
 
   const menu = menus[role];
 
-  function handleRoleChange(nextRole) {
-    setRole(nextRole);
-    setView("Home");
-    setSearchText("");
-    setLoggedIn(true);
-    setMessage(`${labelForRole(nextRole)} preview activated.`);
-  }
-
   function handleLogout() {
     setLoggedIn(false);
-    setAuthMode("login");
-    setMessage("You are on the login screen.");
+    setSearchText("");
+    setLoginForm(loginFormInitial);
+    setCurrentUser(null);
+    setMessage("You are on the login screen. Sign in with your university email.");
   }
 
   function handleLogin() {
-    setLoggedIn(true);
-    setMessage(`${labelForRole(role)} dashboard opened.`);
-  }
+    const normalizedEmail = loginForm.email.trim().toLowerCase();
+    const matchedAccount = demoAccounts.find((account) => account.email.toLowerCase() === normalizedEmail);
 
-  function handleRegister() {
-    if (role !== "student") {
-      const expectedPassword = privilegedRolePasswords[role];
-      if (signupForm.rolePassword.trim() !== expectedPassword) {
-        setMessage(`${labelForRole(role)} registration password is incorrect.`);
-        return;
-      }
+    if (!matchedAccount) {
+      setMessage("No account matched this email. Try one of the demo university emails shown below.");
+      return;
     }
 
-    setSignupForm(signupFormInitial);
-    setAuthMode("login");
-    setMessage(`${labelForRole(role)} account created successfully. You can now sign in.`);
+    if (loginForm.password !== matchedAccount.password) {
+      setMessage("Incorrect password. Please try again.");
+      return;
+    }
+
+    setRole(matchedAccount.role);
+    setCurrentUser(matchedAccount);
+    setView("Home");
+    setLoggedIn(true);
+    setMessage(`${labelForRole(matchedAccount.role)} dashboard opened for ${matchedAccount.name}.`);
   }
 
   function handleCreateProject(event) {
@@ -213,7 +221,7 @@ function App() {
     const nextProject = {
       id: Date.now(),
       title: projectForm.title || "Untitled Project",
-      owner: "Sevinc Yigit",
+      owner: currentUser?.name || "Sevinc Yigit",
       type: projectForm.type,
       status: "Open",
       description: projectForm.description || "No description provided yet.",
@@ -284,24 +292,6 @@ function App() {
 
   return (
     <div className="app-shell">
-      <div className="role-switcher">
-        <div>
-          <strong>Project Matching Platform</strong>
-          <div className="switcher-subtitle"></div>
-        </div>
-        <div className="chip-row">
-          {roleTabs.map((tab) => (
-            <button
-              key={tab.id}
-              className={`chip ${role === tab.id ? "active" : ""}`}
-              onClick={() => handleRoleChange(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="workspace-stage">
       {loggedIn ? (
         <div className="dashboard">
@@ -333,8 +323,8 @@ function App() {
                   🔔
                 </button>
                 <div className="profile-pill">
-                  <div className="avatar">{initialsForRole(role)}</div>
-                  <span>{profileNameForRole(role)}</span>
+                  <div className="avatar">{initialsForName(currentUser?.name || profileNameForRole(role))}</div>
+                  <span>{currentUser?.name || profileNameForRole(role)}</span>
                 </div>
               </div>
             </header>
@@ -355,6 +345,7 @@ function App() {
                   onProjectFormChange={setProjectForm}
                   projectForm={projectForm}
                   onCreateProject={handleCreateProject}
+                  currentUser={currentUser}
                 />
               )}
 
@@ -367,6 +358,7 @@ function App() {
                   onRequestDecision={handleRequestDecision}
                   selectedProject={selectedProject}
                   onSelectProject={setSelectedProjectId}
+                  currentUser={currentUser}
                 />
               )}
 
@@ -385,6 +377,7 @@ function App() {
                   advisorDirectory={advisors}
                   selectedProject={selectedProject}
                   onSelectProject={setSelectedProjectId}
+                  currentUser={currentUser}
                 />
               )}
             </div>
@@ -392,13 +385,9 @@ function App() {
         </div>
       ) : (
         <AuthScreen
-          role={role}
-          mode={authMode}
+          loginForm={loginForm}
+          onLoginFormChange={setLoginForm}
           onLogin={handleLogin}
-          onSwitchMode={setAuthMode}
-          signupForm={signupForm}
-          onSignupFormChange={setSignupForm}
-          onRegister={handleRegister}
         />
       )}
       </div>
@@ -418,6 +407,7 @@ function StudentPages({
   projectForm,
   onProjectFormChange,
   onCreateProject,
+  currentUser,
 }) {
   if (view === "My Projects") {
     return (
@@ -484,8 +474,9 @@ function StudentPages({
         <SectionTitle title="Profile" subtitle="Static student profile summary for the demo." />
         <ProfileRows
           rows={[
-            ["Full Name", "Sevinc Yigit"],
-            ["Department / Year", "Software Engineering / 3"],
+            ["Full Name", currentUser?.name || "Sevinc Yigit"],
+            ["Email", currentUser?.email || "sevinc.yigit@ogr.university.edu.tr"],
+            ["Department / Year", `${currentUser?.department || "Software Engineering"} / ${currentUser?.year || "3"}`],
             ["Interests", "Artificial Intelligence, Machine Learning"],
             ["Skills", "React, Python, UI/UX"],
             ["GitHub", "github.com/sevincyigit"],
@@ -505,7 +496,7 @@ function StudentPages({
   );
 }
 
-function AdvisorPages({ view, announcements, projects, requests, onRequestDecision, selectedProject, onSelectProject }) {
+function AdvisorPages({ view, announcements, projects, requests, onRequestDecision, selectedProject, onSelectProject, currentUser }) {
   if (view === "My Projects") {
     return (
       <>
@@ -559,9 +550,10 @@ function AdvisorPages({ view, announcements, projects, requests, onRequestDecisi
         <SectionTitle title="Advisor Profile" subtitle="Instructor profile shown to students." />
         <ProfileRows
           rows={[
-            ["Full Name", "Sila Korklubasoglu"],
-            ["Department", "Software Engineering"],
-            ["Academic Title", "Professor"],
+            ["Full Name", currentUser?.name || "Sila Korklubasoglu"],
+            ["Email", currentUser?.email || "sila.korklubasoglu@university.edu.tr"],
+            ["Department", currentUser?.department || "Software Engineering"],
+            ["Academic Title", currentUser?.title || "Professor"],
             ["Areas of Expertise", "Machine Learning, Python, UI/UX"],
             ["Research Interests", "Natural Language Processing, Computer Vision"],
             ["Status", "Available for advising"],
@@ -713,115 +705,45 @@ function AdminPages({
   );
 }
 
-function AuthScreen({ role, mode, onLogin, onSwitchMode, signupForm, onSignupFormChange, onRegister }) {
+function AuthScreen({ loginForm, onLoginFormChange, onLogin }) {
   return (
     <div className="login-page">
       <section className="welcome-panel">
         <div>
           <p className="eyebrow">Project Matching Platform</p>
-          <h1>{mode === "login" ? "Welcome Back!" : "Create Your Account"}</h1>
+          <h1>Single Sign-In</h1>
           <p>
-            {mode === "login"
-              ? "Sign in to manage your projects and build your team."
-              : "Register to create projects, join teams and connect with advisors."}
+            Sign in from a single page. The system identifies whether you are a student, advisor, or admin from your email address.
           </p>
         </div>
       </section>
       <section className="form-panel">
         <div className="card login-card auth-card">
-          <div className="auth-toggle">
-            <button
-              className={`auth-tab ${mode === "login" ? "active" : ""}`}
-              type="button"
-              onClick={() => onSwitchMode("login")}
-            >
-              Sign In
-            </button>
-            <button
-              className={`auth-tab ${mode === "signup" ? "active" : ""}`}
-              type="button"
-              onClick={() => onSwitchMode("signup")}
-            >
-              Sign Up
-            </button>
+          <h2>Sign In</h2>
+          <div className="field">
+            <label>Email</label>
+            <input
+              placeholder="name@university.edu.tr"
+              value={loginForm.email}
+              onChange={(event) => onLoginFormChange({ ...loginForm, email: event.target.value })}
+            />
           </div>
-
-          {mode === "login" ? (
-            <>
-              <h2>{labelForRole(role)} Login</h2>
-              <div className="field">
-                <label>Email</label>
-                <input placeholder="name@university.edu.tr" />
-              </div>
-              <div className="field">
-                <label>Password</label>
-                <input type="password" placeholder="********" />
-              </div>
-              <button className="primary-btn auth-submit" type="button" onClick={onLogin}>
-                Sign In
-              </button>
-              <button className="ghost-btn auth-secondary" type="button" onClick={() => onSwitchMode("signup")}>
-                Create an account
-              </button>
-            </>
-          ) : (
-            <>
-              <h2>{labelForRole(role)} Registration</h2>
-              <div className="field">
-                <label>Full Name</label>
-                <input
-                  placeholder="Sevinc Yigit"
-                  value={signupForm.fullName}
-                  onChange={(event) => onSignupFormChange({ ...signupForm, fullName: event.target.value })}
-                />
-              </div>
-              <div className="field">
-                <label>Email</label>
-                <input
-                  placeholder="name@university.edu.tr"
-                  value={signupForm.email}
-                  onChange={(event) => onSignupFormChange({ ...signupForm, email: event.target.value })}
-                />
-              </div>
-              <div className="field">
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="Create a password"
-                  value={signupForm.password}
-                  onChange={(event) => onSignupFormChange({ ...signupForm, password: event.target.value })}
-                />
-              </div>
-              <div className="field">
-                <label>Department</label>
-                <input
-                  placeholder="Software Engineering"
-                  value={signupForm.department}
-                  onChange={(event) => onSignupFormChange({ ...signupForm, department: event.target.value })}
-                />
-              </div>
-              {role !== "student" && (
-                <div className="field">
-                  <label>{labelForRole(role)} Registration Password</label>
-                  <input
-                    type="password"
-                    placeholder={`Enter ${labelForRole(role).toLowerCase()} access password`}
-                    value={signupForm.rolePassword}
-                    onChange={(event) => onSignupFormChange({ ...signupForm, rolePassword: event.target.value })}
-                  />
-                </div>
-              )}
-              <button className="primary-btn auth-submit" type="button" onClick={onRegister}>
-                Register
-              </button>
-              <button className="ghost-btn auth-secondary" type="button" onClick={() => onSwitchMode("login")}>
-                I already have an account
-              </button>
-              <p className="auth-hint">
-                To register as an Advisor or Admin, please request the role-specific password from the course instructor.
-              </p>
-            </>
-          )}
+          <div className="field">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="********"
+              value={loginForm.password}
+              onChange={(event) => onLoginFormChange({ ...loginForm, password: event.target.value })}
+            />
+          </div>
+          <button className="primary-btn auth-submit" type="button" onClick={onLogin}>
+            Sign In
+          </button>
+          <p className="auth-hint">
+            Demo accounts: sevinc.yigit@ogr.university.edu.tr, sila.korklubasoglu@university.edu.tr, admin@university.edu.tr
+          </p>
+          <p className="auth-hint">All demo accounts use the password: 123456</p>
         </div>
       </section>
     </div>
@@ -1000,14 +922,17 @@ function labelForRole(role) {
 
 function profileNameForRole(role) {
   if (role === "advisor") return "Sila Korklubasoglu";
-  if (role === "admin") return "Admin";
+  if (role === "admin") return "System Admin";
   return "Sevinc Yigit";
 }
 
-function initialsForRole(role) {
-  if (role === "advisor") return "SK";
-  if (role === "admin") return "AD";
-  return "SY";
+function initialsForName(name) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("");
 }
 
 export default App;

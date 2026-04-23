@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const menus = {
   student: ["Home", "My Projects", "Create Project", "Find Advisor", "Profile"],
   advisor: ["Home", "My Projects", "Incoming Requests", "Profile"],
-  admin: ["Home", "Manage Students", "Manage Advisors", "Manage Projects", "Create Announcement"],
+  admin: ["Home", "Manage Students", "Manage Advisors", "Create Announcement"],
 };
 
 const initialProjects = [
@@ -85,10 +85,78 @@ const initialAdvisors = [
 ];
 
 const initialRequests = [
-  { id: 1, student: "Sevinc Yigit", project: "AI-Based Smart Agriculture", type: "TUBITAK", status: "Waiting" },
-  { id: 2, student: "Mergen Yilmaz", project: "Food App", type: "TUBITAK", status: "Waiting" },
-  { id: 3, student: "Firdevs Su", project: "ADHD", type: "Teknofest", status: "Waiting" },
-  { id: 4, student: "Emre Guner", project: "AI Predictor", type: "Teknofest", status: "Accepted" },
+  {
+    id: 1,
+    student: "Sevinc Yigit",
+    project: "AI-Based Smart Agriculture",
+    type: "TUBITAK",
+    status: "Waiting",
+    department: "Software Engineering",
+    year: "3rd Year",
+    teamMembers: 4,
+    requestedDate: "23 Apr 2026",
+    expectedDuration: "6 months",
+    projectField: "Artificial Intelligence / IoT",
+    advisorPreference: "Prof. Selin Yuce",
+    description: "An AI-assisted agriculture platform that combines field sensors, crop health prediction, and a monitoring dashboard.",
+    objective: "To help agricultural teams monitor crop conditions in real time and predict irrigation or disease risks earlier.",
+    deliverables: ["Sensor dashboard", "Crop health prediction model", "Mobile notifications", "Advisor progress reports"],
+    requiredSkills: ["React", "Python", "IoT"],
+  },
+  {
+    id: 2,
+    student: "Mergen Yilmaz",
+    project: "Food App",
+    type: "TUBITAK",
+    status: "Waiting",
+    department: "Computer Engineering",
+    year: "4th Year",
+    teamMembers: 3,
+    requestedDate: "22 Apr 2026",
+    expectedDuration: "4 months",
+    projectField: "Mobile Development / Health Tech",
+    advisorPreference: "Prof. Duygu Dogan",
+    description: "A nutrition and meal planning app focused on personalized recommendations and a clean mobile experience.",
+    objective: "To provide users with healthier meal planning suggestions tailored to dietary goals and daily habits.",
+    deliverables: ["Mobile prototype", "Recommendation engine", "User testing report"],
+    requiredSkills: ["Flutter", "Firebase", "UX Research"],
+  },
+  {
+    id: 3,
+    student: "Firdevs Su",
+    project: "ADHD",
+    type: "Teknofest",
+    status: "Waiting",
+    department: "Software Engineering",
+    year: "4th Year",
+    teamMembers: 5,
+    requestedDate: "21 Apr 2026",
+    expectedDuration: "5 months",
+    projectField: "EdTech / Behavioral Analytics",
+    advisorPreference: "Prof. Mehmet Yildiz",
+    description: "A support tool for ADHD students with personalized reminders, progress tracking, and behavioral analytics.",
+    objective: "To improve academic planning and focus support for students with ADHD through intelligent reminders and analytics.",
+    deliverables: ["Student mobile app", "Behavior analytics dashboard", "Pilot test summary"],
+    requiredSkills: ["Python", "Machine Learning", "Data Analysis"],
+  },
+  {
+    id: 4,
+    student: "Emre Guner",
+    project: "AI Predictor",
+    type: "Teknofest",
+    status: "Accepted",
+    department: "Electrical Engineering",
+    year: "2nd Year",
+    teamMembers: 4,
+    requestedDate: "18 Apr 2026",
+    expectedDuration: "5 months",
+    projectField: "Artificial Intelligence / Forecasting",
+    advisorPreference: "Prof. Selin Yuce",
+    description: "A prediction engine that analyzes historical competition and project data to estimate team performance.",
+    objective: "To support competition teams with forecasting insights for planning, resource usage, and milestone risks.",
+    deliverables: ["Prediction engine", "Admin dashboard", "Evaluation dataset"],
+    requiredSkills: ["Python", "Deep Learning", "Dashboard Design"],
+  },
 ];
 
 const students = [
@@ -162,6 +230,7 @@ function App() {
   const [requests, setRequests] = useState(initialRequests);
   const [advisorAccounts, setAdvisorAccounts] = useState(initialAdvisorAccounts);
   const [selectedProjectId, setSelectedProjectId] = useState(initialProjects[0].id);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [message, setMessage] = useState("Enter your university email to sign in. The system will determine your role automatically.");
   const [projectForm, setProjectForm] = useState(emptyForm);
   const [announcementForm, setAnnouncementForm] = useState(announcementFormInitial);
@@ -355,6 +424,8 @@ function App() {
                   announcements={announcements}
                   projects={filteredProjects.slice(0, 4)}
                   requests={requests}
+                  selectedRequestId={selectedRequestId}
+                  onSelectRequest={setSelectedRequestId}
                   onRequestDecision={handleRequestDecision}
                   selectedProject={selectedProject}
                   onSelectProject={setSelectedProjectId}
@@ -496,7 +567,18 @@ function StudentPages({
   );
 }
 
-function AdvisorPages({ view, announcements, projects, requests, onRequestDecision, selectedProject, onSelectProject, currentUser }) {
+function AdvisorPages({
+  view,
+  announcements,
+  projects,
+  requests,
+  selectedRequestId,
+  onSelectRequest,
+  onRequestDecision,
+  selectedProject,
+  onSelectProject,
+  currentUser,
+}) {
   if (view === "My Projects") {
     return (
       <>
@@ -509,38 +591,117 @@ function AdvisorPages({ view, announcements, projects, requests, onRequestDecisi
 
   if (view === "Incoming Requests") {
     return (
-      <div className="card table-card">
-        <SectionTitle title="Incoming Requests" subtitle="Accepting or rejecting updates request status live." />
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>Project</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((request) => (
-              <tr key={request.id}>
-                <td>{request.student}</td>
-                <td>{request.project}</td>
-                <td>{request.type}</td>
-                <td>{request.status}</td>
-                <td className="table-actions">
-                  <button className="primary-btn small" type="button" onClick={() => onRequestDecision(request.id, "Accepted")}>
-                    Accept
-                  </button>
-                  <button className="danger-btn" type="button" onClick={() => onRequestDecision(request.id, "Rejected")}>
-                    Reject
-                  </button>
-                </td>
+      <>
+        <div className="card table-card">
+          <SectionTitle title="Incoming Requests" subtitle="Accept, reject, or open the project details before making your decision." />
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Project</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {requests.map((request) => (
+                <React.Fragment key={request.id}>
+                  <tr className={request.id === selectedRequestId ? "selected-request-row" : ""}>
+                    <td>{request.student}</td>
+                    <td>{request.project}</td>
+                    <td>{request.type}</td>
+                    <td>{request.status}</td>
+                    <td className="table-actions request-action-cell">
+                      <button className="primary-btn small" type="button" onClick={() => onRequestDecision(request.id, "Accepted")}>
+                        Accept
+                      </button>
+                      <button className="danger-btn small-danger-btn" type="button" onClick={() => onRequestDecision(request.id, "Rejected")}>
+                        Reject
+                      </button>
+                      <button className="ghost-btn small-ghost-btn" type="button" onClick={() => onSelectRequest(request.id)}>
+                        View Details
+                      </button>
+                    </td>
+                  </tr>
+
+                  {request.id === selectedRequestId && (
+                    <tr className="request-details-row">
+                      <td colSpan="5">
+                        <div className="inline-request-details">
+                          <div className="detail-stack">
+                            <div className="detail-overview">
+                              <strong>{request.project}</strong>
+                              <p>{request.description}</p>
+                            </div>
+
+                            <div className="detail-inline">
+                              <span className="badge blue">{request.type}</span>
+                              <span className={`badge ${request.status === "Accepted" ? "green" : request.status === "Rejected" ? "red" : "amber"}`}>
+                                {request.status}
+                              </span>
+                              <span className="badge sand">{request.projectField}</span>
+                            </div>
+
+                            <div className="request-detail-grid">
+                              <div className="detail-block">
+                                <strong>Project Objective</strong>
+                                <p>{request.objective}</p>
+                              </div>
+
+                              <div className="detail-block detail-cardlet">
+                                <strong>Student</strong>
+                                <p>{request.student}</p>
+                                <strong>Department / Year</strong>
+                                <p>{request.department} / {request.year}</p>
+                                <strong>Requested Advisor</strong>
+                                <p>{request.advisorPreference}</p>
+                                <strong>Requested On</strong>
+                                <p>{request.requestedDate}</p>
+                              </div>
+                            </div>
+
+                            <div className="request-detail-grid">
+                              <div className="detail-block">
+                                <strong>Expected Deliverables</strong>
+                                <div className="request-deliverable-list">
+                                  {request.deliverables.map((item) => (
+                                    <div className="request-deliverable-item" key={item}>
+                                      {item}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="detail-block detail-cardlet">
+                                <strong>Team Size</strong>
+                                <p>{request.teamMembers} students</p>
+                                <strong>Planned Duration</strong>
+                                <p>{request.expectedDuration}</p>
+                              </div>
+                            </div>
+
+                            <div className="detail-block">
+                              <strong>Required Skills</strong>
+                              <div className="tag-list">
+                                {request.requiredSkills.map((skill) => (
+                                  <span className="tag" key={skill}>
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 
@@ -589,7 +750,7 @@ function AdminPages({
 }) {
   if (view === "Manage Students") {
     return (
-      <div className="card">
+      <div className="card table-card">
         <SectionTitle title="Manage Students" subtitle="Admin student table for quick review." />
         <SimpleToolbar />
         <table className="data-table">
@@ -664,16 +825,6 @@ function AdminPages({
             ))}
           </div>
         </div>
-      </>
-    );
-  }
-
-  if (view === "Manage Projects") {
-    return (
-      <>
-        <SectionTitle title="Manage Projects" subtitle="Admin project overview and detail preview." />
-        <ProjectGrid items={projects} onSelectProject={onSelectProject} compact />
-        <ProjectDetailsCard project={selectedProject} />
       </>
     );
   }

@@ -17,6 +17,9 @@ const initialProjects = [
     requiredSkills: ["React", "Node.js", "UI/UX"],
     teamMembers: 4,
     advisor: "Not assigned",
+    interests: ["Conversational AI", "Automation", "Web Development"],
+    ownerGithub: "github.com/sevincyigit",
+    ownerLinkedIn: "linkedin.com/in/sevincyigit",
   },
   {
     id: 2,
@@ -28,6 +31,9 @@ const initialProjects = [
     requiredSkills: ["Flutter", "Firebase", "UX Research"],
     teamMembers: 5,
     advisor: "Prof. Selin Yuce",
+    interests: ["Product Design", "Mobile UX", "Community Apps"],
+    ownerGithub: "github.com/merveyilmaz",
+    ownerLinkedIn: "linkedin.com/in/merveyilmaz",
   },
   {
     id: 3,
@@ -39,6 +45,9 @@ const initialProjects = [
     requiredSkills: ["Python", "Machine Learning", "Data Analysis"],
     teamMembers: 3,
     advisor: "Prof. Mehmet Yildiz",
+    interests: ["Academic Research", "Recommender Systems", "Data Science"],
+    ownerGithub: "github.com/deryakoc",
+    ownerLinkedIn: "linkedin.com/in/deryakoc",
   },
   {
     id: 4,
@@ -50,6 +59,9 @@ const initialProjects = [
     requiredSkills: ["React", "Python", "IoT"],
     teamMembers: 4,
     advisor: "Not assigned",
+    interests: ["AI", "Sustainability", "IoT"],
+    ownerGithub: "github.com/sevincyigit",
+    ownerLinkedIn: "linkedin.com/in/sevincyigit",
   },
 ];
 
@@ -78,10 +90,46 @@ const initialAnnouncements = [
 ];
 
 const initialAdvisors = [
-  { id: 1, name: "Prof. Selin Yuce", expertise: "Artificial Intelligence", department: "Software Engineering", available: true },
-  { id: 2, name: "Prof. Duygu Dogan", expertise: "UI/UX", department: "Software Engineering", available: true },
-  { id: 3, name: "Prof. Mehmet Yildiz", expertise: "Data Mining", department: "Computer Engineering", available: false },
-  { id: 4, name: "Prof. Ahmet Yilmaz", expertise: "Cyber Security", department: "Computer Engineering", available: true },
+  {
+    id: 1,
+    name: "Prof. Selin Yuce",
+    expertise: "Artificial Intelligence",
+    department: "Software Engineering",
+    available: true,
+    expertiseAreas: ["Machine Learning", "Data Science"],
+    researchInterests: ["Deep Learning", "Natural Language Processing", "Computer Vision"],
+    supervisedProjects: ["AI-based Chatbot Systems", "Image Processing Projects"],
+  },
+  {
+    id: 2,
+    name: "Prof. Duygu Dogan",
+    expertise: "UI/UX",
+    department: "Software Engineering",
+    available: true,
+    expertiseAreas: ["Interaction Design", "Usability Testing"],
+    researchInterests: ["Design Systems", "Mobile UX", "Human Computer Interaction"],
+    supervisedProjects: ["Campus App UX Redesign", "Accessibility Improvement Projects"],
+  },
+  {
+    id: 3,
+    name: "Prof. Mehmet Yildiz",
+    expertise: "Data Mining",
+    department: "Computer Engineering",
+    available: false,
+    expertiseAreas: ["Data Mining", "Predictive Analytics"],
+    researchInterests: ["Recommender Systems", "Big Data", "Knowledge Discovery"],
+    supervisedProjects: ["Student Analytics Platform", "Recommendation Engine Projects"],
+  },
+  {
+    id: 4,
+    name: "Prof. Ahmet Yilmaz",
+    expertise: "Cyber Security",
+    department: "Computer Engineering",
+    available: true,
+    expertiseAreas: ["Cyber Security", "Network Defense"],
+    researchInterests: ["Threat Detection", "Secure Systems", "Digital Forensics"],
+    supervisedProjects: ["Secure Messaging Tools", "Network Monitoring Dashboards"],
+  },
 ];
 
 const initialRequests = [
@@ -166,10 +214,82 @@ const students = [
   { id: 4, name: "Umut Kaya", department: "Computer Engineering", year: "4" },
 ];
 
+const studentProfiles = [
+  {
+    email: "sevinc.yigit@ogr.university.edu.tr",
+    password: "123456",
+    role: "student",
+    name: "Sevinc Yigit",
+    department: "Software Engineering",
+    year: "3rd Year",
+    shortBio: "Software engineering student focused on AI-driven products and collaborative project development.",
+    interests: ["Artificial Intelligence", "Machine Learning"],
+    skills: ["React", "Python", "UI/UX"],
+    github: "github.com/sevincyigit",
+    linkedIn: "linkedin.com/in/sevincyigit",
+  },
+  {
+    email: "firdevs.su@ogr.university.edu.tr",
+    password: "123456",
+    role: "student",
+    name: "Firdevs Su",
+    department: "Software Engineering",
+    year: "4th Year",
+    shortBio: "Senior student who enjoys frontend problem solving, clean interfaces, and practical AI features.",
+    interests: ["Web Development", "AI"],
+    skills: ["React", "UI/UX", "Python"],
+    github: "github.com/firdevssu",
+    linkedIn: "linkedin.com/in/firdevssu",
+  },
+  {
+    email: "emre.guner@ogr.university.edu.tr",
+    password: "123456",
+    role: "student",
+    name: "Emre Guner",
+    department: "Electrical Engineering",
+    year: "2nd Year",
+    shortBio: "Electrical engineering student interested in embedded systems, robotics, and hands-on prototyping.",
+    interests: ["Embedded Systems", "Robotics"],
+    skills: ["C", "IoT", "PCB Design"],
+    github: "github.com/emreguner",
+    linkedIn: "linkedin.com/in/emreguner",
+  },
+];
+
+const initialTeamRequests = [
+  {
+    id: 1,
+    projectId: 1,
+    projectTitle: "AI Chatbot",
+    projectType: "Course Project",
+    projectOwner: "Sevinc Yigit",
+    requesterName: "Firdevs Su",
+    status: "Waiting",
+    requestedDate: "25 Apr 2026",
+    note: "I can support both frontend development and basic ML integration for the chatbot flow.",
+  },
+];
+
 const initialAdvisorAccounts = [
-  { id: 1, name: "Sila Korklubasoglu", department: "Software Engineering", status: "Active" },
-  { id: 2, name: "Ayse Demir", department: "Software Engineering", status: "Active" },
-  { id: 3, name: "Ahmet Yilmaz", department: "Computer Engineering", status: "Inactive" },
+  { id: 1, name: "Prof. Selin Yuce", department: "Software Engineering", status: "Active" },
+  { id: 2, name: "Prof. Duygu Dogan", department: "Software Engineering", status: "Active" },
+  { id: 3, name: "Prof. Ahmet Yilmaz", department: "Computer Engineering", status: "Inactive" },
+];
+
+const initialAdvisorProfiles = [
+  {
+    id: 1,
+    email: "sila.korklubasoglu@university.edu.tr",
+    password: "123456",
+    role: "advisor",
+    name: "Prof. Selin Yuce",
+    department: "Software Engineering",
+    title: "Professor",
+    expertiseAreas: ["Machine Learning", "Python", "UI/UX"],
+    researchInterests: ["Natural Language Processing", "Computer Vision"],
+    supervisedProjects: ["AI-based Chatbot Systems", "Image Processing Projects", "Web-based AI Tools"],
+    available: true,
+  },
 ];
 
 const emptyForm = {
@@ -193,23 +313,7 @@ const loginFormInitial = {
   password: "",
 };
 
-const demoAccounts = [
-  {
-    email: "sevinc.yigit@ogr.university.edu.tr",
-    password: "123456",
-    role: "student",
-    name: "Sevinc Yigit",
-    department: "Software Engineering",
-    year: "3",
-  },
-  {
-    email: "sila.korklubasoglu@university.edu.tr",
-    password: "123456",
-    role: "advisor",
-    name: "Sila Korklubasoglu",
-    department: "Software Engineering",
-    title: "Professor",
-  },
+const staffAccounts = [
   {
     email: "admin@university.edu.tr",
     password: "123456",
@@ -224,13 +328,18 @@ function App() {
   const [view, setView] = useState("Home");
   const [loggedIn, setLoggedIn] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [studentDirectory, setStudentDirectory] = useState(studentProfiles);
+  const [advisorProfiles, setAdvisorProfiles] = useState(initialAdvisorProfiles);
   const [projects, setProjects] = useState(initialProjects);
   const [announcements, setAnnouncements] = useState(initialAnnouncements);
   const [advisors, setAdvisors] = useState(initialAdvisors);
   const [requests, setRequests] = useState(initialRequests);
+  const [teamRequests, setTeamRequests] = useState(initialTeamRequests);
   const [advisorAccounts, setAdvisorAccounts] = useState(initialAdvisorAccounts);
   const [selectedProjectId, setSelectedProjectId] = useState(initialProjects[0].id);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
+  const [selectedTeamRequestId, setSelectedTeamRequestId] = useState(initialTeamRequests[0]?.id || null);
+  const [selectedAdvisorId, setSelectedAdvisorId] = useState(null);
   const [message, setMessage] = useState("Enter your university email to sign in. The system will determine your role automatically.");
   const [projectForm, setProjectForm] = useState(emptyForm);
   const [announcementForm, setAnnouncementForm] = useState(announcementFormInitial);
@@ -254,6 +363,16 @@ function App() {
     );
   });
 
+  const studentProjects = filteredProjects.filter((project) => project.owner === currentUser?.name);
+  const discoverProjects = filteredProjects.filter((project) => project.owner !== currentUser?.name);
+  const advisorProjects = filteredProjects.filter((project) => project.advisor === currentUser?.name);
+  const advisorRequests = requests.filter((request) => request.advisorPreference === currentUser?.name);
+  const selectedStudentProject = studentProjects.find((project) => project.id === selectedProjectId) || studentProjects[0] || null;
+  const selectedDiscoverProject = discoverProjects.find((project) => project.id === selectedProjectId) || discoverProjects[0] || null;
+  const selectedAdvisorProject = advisorProjects.find((project) => project.id === selectedProjectId) || advisorProjects[0] || null;
+  const studentIncomingRequests = teamRequests.filter((request) => request.projectOwner === currentUser?.name);
+  const selectedTeamRequest = studentIncomingRequests.find((request) => request.id === selectedTeamRequestId) || studentIncomingRequests[0] || null;
+
   const menu = menus[role];
 
   function handleLogout() {
@@ -261,12 +380,17 @@ function App() {
     setSearchText("");
     setLoginForm(loginFormInitial);
     setCurrentUser(null);
+    setSelectedTeamRequestId(initialTeamRequests[0]?.id || null);
+    setSelectedAdvisorId(null);
     setMessage("You are on the login screen. Sign in with your university email.");
   }
 
   function handleLogin() {
     const normalizedEmail = loginForm.email.trim().toLowerCase();
-    const matchedAccount = demoAccounts.find((account) => account.email.toLowerCase() === normalizedEmail);
+    const matchedAccount =
+      studentDirectory.find((account) => account.email.toLowerCase() === normalizedEmail) ||
+      advisorProfiles.find((account) => account.email.toLowerCase() === normalizedEmail) ||
+      staffAccounts.find((account) => account.email.toLowerCase() === normalizedEmail);
 
     if (!matchedAccount) {
       setMessage("No account matched this email. Try one of the demo university emails shown below.");
@@ -282,7 +406,182 @@ function App() {
     setCurrentUser(matchedAccount);
     setView("Home");
     setLoggedIn(true);
+    setSelectedAdvisorId(null);
+    setSelectedTeamRequestId(
+      matchedAccount.role === "student"
+        ? teamRequests.find((request) => request.projectOwner === matchedAccount.name)?.id || null
+        : null,
+    );
     setMessage(`${labelForRole(matchedAccount.role)} dashboard opened for ${matchedAccount.name}.`);
+  }
+
+  function handleStudentProfileSave(profileUpdates) {
+    if (currentUser?.role !== "student") return;
+
+    let updatedStudent = null;
+    const previousName = currentUser.name;
+
+    setStudentDirectory(
+      studentDirectory.map((student) => {
+        if (student.email !== currentUser.email) return student;
+        updatedStudent = {
+          ...student,
+          ...profileUpdates,
+          interests: normalizeCommaSeparatedList(profileUpdates.interests),
+          skills: normalizeCommaSeparatedList(profileUpdates.skills),
+        };
+        return updatedStudent;
+      }),
+    );
+
+    if (updatedStudent) {
+      if (updatedStudent.name !== previousName) {
+        setProjects(
+          projects.map((project) =>
+            project.owner === previousName ? { ...project, owner: updatedStudent.name } : project,
+          ),
+        );
+        setTeamRequests(
+          teamRequests.map((request) => ({
+            ...request,
+            projectOwner: request.projectOwner === previousName ? updatedStudent.name : request.projectOwner,
+            requesterName: request.requesterName === previousName ? updatedStudent.name : request.requesterName,
+          })),
+        );
+      }
+      setCurrentUser(updatedStudent);
+      setMessage("Profile updated successfully.");
+    }
+  }
+
+  function handleAdminStudentSave(originalEmail, profileUpdates) {
+    let updatedStudent = null;
+    let previousStudent = null;
+
+    setStudentDirectory(
+      studentDirectory.map((student) => {
+        if (student.email !== originalEmail) return student;
+        previousStudent = student;
+        updatedStudent = {
+          ...student,
+          ...profileUpdates,
+          interests: normalizeCommaSeparatedList(profileUpdates.interests),
+          skills: normalizeCommaSeparatedList(profileUpdates.skills),
+        };
+        return updatedStudent;
+      }),
+    );
+
+    if (updatedStudent && previousStudent && updatedStudent.name !== previousStudent.name) {
+      setProjects(
+        projects.map((project) =>
+          project.owner === previousStudent.name ? { ...project, owner: updatedStudent.name } : project,
+        ),
+      );
+      setTeamRequests(
+        teamRequests.map((request) => ({
+          ...request,
+          projectOwner: request.projectOwner === previousStudent.name ? updatedStudent.name : request.projectOwner,
+          requesterName: request.requesterName === previousStudent.name ? updatedStudent.name : request.requesterName,
+        })),
+      );
+    }
+
+    if (updatedStudent) {
+      setMessage(`Student profile updated for ${updatedStudent.name}.`);
+    }
+  }
+
+  function handleAdminAddStudent(profileUpdates) {
+    const normalizedEmail = profileUpdates.email.trim().toLowerCase();
+
+    if (!normalizedEmail) {
+      setMessage("Student email is required.");
+      return;
+    }
+
+    if (studentDirectory.some((student) => student.email.toLowerCase() === normalizedEmail)) {
+      setMessage("A student with this email already exists.");
+      return;
+    }
+
+    const nextStudent = {
+      id: Date.now(),
+      email: normalizedEmail,
+      password: "123456",
+      role: "student",
+      name: profileUpdates.name || "New Student",
+      department: profileUpdates.department || "Software Engineering",
+      year: profileUpdates.year || "1st Year",
+      shortBio: profileUpdates.shortBio || "New student profile created by admin.",
+      interests: normalizeCommaSeparatedList(profileUpdates.interests),
+      skills: normalizeCommaSeparatedList(profileUpdates.skills),
+      github: profileUpdates.github || "",
+      linkedIn: profileUpdates.linkedIn || "",
+    };
+
+    setStudentDirectory([nextStudent, ...studentDirectory]);
+    setMessage(`Student "${nextStudent.name}" added successfully.`);
+  }
+
+  function handleAdvisorProfileSave(profileUpdates) {
+    if (currentUser?.role !== "advisor") return;
+
+    let updatedAdvisor = null;
+    const previousName = currentUser.name;
+
+    setAdvisorProfiles(
+      advisorProfiles.map((advisor) => {
+        if (advisor.email !== currentUser.email) return advisor;
+        updatedAdvisor = {
+          ...advisor,
+          ...profileUpdates,
+          expertiseAreas: normalizeCommaSeparatedList(profileUpdates.expertiseAreas),
+          researchInterests: normalizeCommaSeparatedList(profileUpdates.researchInterests),
+          supervisedProjects: normalizeCommaSeparatedList(profileUpdates.supervisedProjects),
+          available: typeof profileUpdates.available === "boolean" ? profileUpdates.available : advisor.available,
+        };
+        return updatedAdvisor;
+      }),
+    );
+
+    if (updatedAdvisor) {
+      setAdvisors(
+        advisors.map((advisor) =>
+          advisor.name === previousName
+            ? {
+                ...advisor,
+                name: updatedAdvisor.name,
+                department: updatedAdvisor.department,
+                expertise: updatedAdvisor.expertiseAreas[0] || advisor.expertise,
+                expertiseAreas: updatedAdvisor.expertiseAreas,
+                researchInterests: updatedAdvisor.researchInterests,
+                supervisedProjects: updatedAdvisor.supervisedProjects,
+                available: updatedAdvisor.available,
+              }
+            : advisor,
+        ),
+      );
+      setAdvisorAccounts(
+        advisorAccounts.map((advisor) =>
+          advisor.name === previousName
+            ? { ...advisor, name: updatedAdvisor.name, department: updatedAdvisor.department }
+            : advisor,
+        ),
+      );
+      setProjects(
+        projects.map((project) =>
+          project.advisor === previousName ? { ...project, advisor: updatedAdvisor.name } : project,
+        ),
+      );
+      setRequests(
+        requests.map((request) =>
+          request.advisorPreference === previousName ? { ...request, advisorPreference: updatedAdvisor.name } : request,
+        ),
+      );
+      setCurrentUser(updatedAdvisor);
+      setMessage("Advisor profile updated successfully.");
+    }
   }
 
   function handleCreateProject(event) {
@@ -338,7 +637,56 @@ function App() {
   }
 
   function handleApplyToProject(project) {
-    setMessage(`Application submitted for ${project.title}.`);
+    if (!currentUser) return;
+
+    const alreadyRequested = teamRequests.some(
+      (request) =>
+        request.projectId === project.id &&
+        request.requesterName === currentUser.name &&
+        request.status === "Waiting",
+    );
+
+    if (alreadyRequested) {
+      setMessage(`You already sent a teammate request for ${project.title}.`);
+      return;
+    }
+
+    const nextRequest = {
+      id: Date.now(),
+      projectId: project.id,
+      projectTitle: project.title,
+      projectType: project.type,
+      projectOwner: project.owner,
+      requesterName: currentUser.name,
+      status: "Waiting",
+      requestedDate: "26 Apr 2026",
+      note: `I would like to contribute to ${project.title} with ${currentUser.skills?.join(", ") || "my skills"}.`,
+    };
+
+    setTeamRequests([nextRequest, ...teamRequests]);
+    setMessage(`Teammate request sent to ${project.owner} for ${project.title}.`);
+  }
+
+  function handleTeamRequestDecision(id, nextStatus) {
+    setTeamRequests(
+      teamRequests.map((request) => (request.id === id ? { ...request, status: nextStatus } : request)),
+    );
+    setMessage(`Teammate request ${nextStatus.toLowerCase()}.`);
+  }
+
+  function handleRemoveProject(id) {
+    const projectToRemove = projects.find((project) => project.id === id);
+    const remainingProjects = projects.filter((project) => project.id !== id);
+
+    setProjects(remainingProjects);
+
+    if (selectedProjectId === id) {
+      setSelectedProjectId(remainingProjects[0]?.id || null);
+    }
+
+    if (projectToRemove) {
+      setMessage(`Project "${projectToRemove.title}" removed.`);
+    }
   }
 
   function toggleAdvisorAccount(id) {
@@ -351,12 +699,162 @@ function App() {
     );
   }
 
+  function handleAdminAdvisorSave(id, profileUpdates) {
+    const previousAdvisor =
+      advisorProfiles.find((advisor) => advisor.id === id) ||
+      advisorAccounts.find((advisor) => advisor.id === id);
+
+    if (!previousAdvisor) return;
+
+    const nextExpertiseAreas = normalizeCommaSeparatedList(profileUpdates.expertiseAreas);
+    const nextResearchInterests = normalizeCommaSeparatedList(profileUpdates.researchInterests);
+    const nextSupervisedProjects = normalizeCommaSeparatedList(profileUpdates.supervisedProjects);
+    const nextStatus = profileUpdates.status || (profileUpdates.available ? "Active" : "Inactive");
+    const nextAvailable = nextStatus === "Active";
+
+    const updatedAdvisorProfile = {
+      ...previousAdvisor,
+      ...profileUpdates,
+      name: profileUpdates.name || previousAdvisor.name,
+      email: profileUpdates.email || previousAdvisor.email,
+      department: profileUpdates.department || previousAdvisor.department,
+      title: profileUpdates.title || previousAdvisor.title,
+      expertiseAreas: nextExpertiseAreas,
+      researchInterests: nextResearchInterests,
+      supervisedProjects: nextSupervisedProjects,
+      available: nextAvailable,
+    };
+
+    setAdvisorProfiles(
+      advisorProfiles.map((advisor) => (advisor.id === id ? updatedAdvisorProfile : advisor)),
+    );
+    setAdvisorAccounts(
+      advisorAccounts.map((advisor) =>
+        advisor.id === id
+          ? {
+              ...advisor,
+              name: updatedAdvisorProfile.name,
+              department: updatedAdvisorProfile.department,
+              status: nextStatus,
+            }
+          : advisor,
+      ),
+    );
+    setAdvisors(
+      advisors.map((advisor) =>
+        advisor.id === id
+          ? {
+              ...advisor,
+              name: updatedAdvisorProfile.name,
+              department: updatedAdvisorProfile.department,
+              expertise: nextExpertiseAreas[0] || advisor.expertise,
+              expertiseAreas: nextExpertiseAreas,
+              researchInterests: nextResearchInterests,
+              supervisedProjects: nextSupervisedProjects,
+              available: nextAvailable,
+            }
+          : advisor,
+      ),
+    );
+    setProjects(
+      projects.map((project) =>
+        project.advisor === previousAdvisor.name ? { ...project, advisor: updatedAdvisorProfile.name } : project,
+      ),
+    );
+    setRequests(
+      requests.map((request) =>
+        request.advisorPreference === previousAdvisor.name
+          ? { ...request, advisorPreference: updatedAdvisorProfile.name }
+          : request,
+      ),
+    );
+
+    if (currentUser?.role === "advisor" && currentUser.email === updatedAdvisorProfile.email) {
+      setCurrentUser(updatedAdvisorProfile);
+    }
+
+    setMessage(`Advisor profile updated for ${updatedAdvisorProfile.name}.`);
+  }
+
+  function handleAdminAddAdvisor(profileUpdates) {
+    const normalizedEmail = profileUpdates.email.trim().toLowerCase();
+
+    if (!normalizedEmail) {
+      setMessage("Advisor email is required.");
+      return;
+    }
+
+    const emailExists =
+      advisorProfiles.some((advisor) => advisor.email.toLowerCase() === normalizedEmail) ||
+      staffAccounts.some((account) => account.email.toLowerCase() === normalizedEmail);
+
+    if (emailExists) {
+      setMessage("An advisor with this email already exists.");
+      return;
+    }
+
+    const nextId = Date.now();
+    const available = profileUpdates.status !== "Inactive";
+    const nextAdvisorProfile = {
+      id: nextId,
+      email: normalizedEmail,
+      password: "123456",
+      role: "advisor",
+      name: profileUpdates.name || "New Advisor",
+      department: profileUpdates.department || "Software Engineering",
+      title: profileUpdates.title || "Professor",
+      expertiseAreas: normalizeCommaSeparatedList(profileUpdates.expertiseAreas),
+      researchInterests: normalizeCommaSeparatedList(profileUpdates.researchInterests),
+      supervisedProjects: normalizeCommaSeparatedList(profileUpdates.supervisedProjects),
+      available,
+    };
+
+    setAdvisorProfiles([nextAdvisorProfile, ...advisorProfiles]);
+    setAdvisorAccounts([
+      {
+        id: nextId,
+        name: nextAdvisorProfile.name,
+        department: nextAdvisorProfile.department,
+        status: available ? "Active" : "Inactive",
+      },
+      ...advisorAccounts,
+    ]);
+    setAdvisors([
+      {
+        id: nextId,
+        name: nextAdvisorProfile.name,
+        expertise: nextAdvisorProfile.expertiseAreas[0] || "General Advising",
+        department: nextAdvisorProfile.department,
+        available,
+        expertiseAreas: nextAdvisorProfile.expertiseAreas,
+        researchInterests: nextAdvisorProfile.researchInterests,
+        supervisedProjects: nextAdvisorProfile.supervisedProjects,
+      },
+      ...advisors,
+    ]);
+    setMessage(`Advisor "${nextAdvisorProfile.name}" added successfully.`);
+  }
+
   function toggleAdvisorAvailability(id) {
+    const toggledAdvisor = advisors.find((advisor) => advisor.id === id);
+
     setAdvisors(
       advisors.map((advisor) =>
         advisor.id === id ? { ...advisor, available: !advisor.available } : advisor,
       ),
     );
+
+    if (toggledAdvisor) {
+      setAdvisorProfiles(
+        advisorProfiles.map((advisor) =>
+          advisor.name === toggledAdvisor.name ? { ...advisor, available: !advisor.available } : advisor,
+        ),
+      );
+
+      if (currentUser?.role === "advisor" && currentUser.name === toggledAdvisor.name) {
+        setCurrentUser({ ...currentUser, available: !toggledAdvisor.available });
+      }
+    }
   }
 
   return (
@@ -405,9 +903,11 @@ function App() {
                 <StudentPages
                   view={view}
                   announcements={announcements}
-                  projects={filteredProjects}
+                  projects={studentProjects}
+                  discoverProjects={discoverProjects}
                   advisors={filteredAdvisors}
-                  selectedProject={selectedProject}
+                  selectedProject={selectedStudentProject}
+                  selectedDiscoverProject={selectedDiscoverProject}
                   onSelectProject={setSelectedProjectId}
                   onApplyToProject={handleApplyToProject}
                   onAdvisorRequest={handleAdvisorRequest}
@@ -415,6 +915,14 @@ function App() {
                   projectForm={projectForm}
                   onCreateProject={handleCreateProject}
                   currentUser={currentUser}
+                  incomingRequests={studentIncomingRequests}
+                  selectedTeamRequest={selectedTeamRequest}
+                  onSelectTeamRequest={setSelectedTeamRequestId}
+                  onTeamRequestDecision={handleTeamRequestDecision}
+                  selectedAdvisorId={selectedAdvisorId}
+                  onSelectAdvisor={setSelectedAdvisorId}
+                  onStudentProfileSave={handleStudentProfileSave}
+                  studentDirectory={studentDirectory}
                 />
               )}
 
@@ -422,13 +930,15 @@ function App() {
                 <AdvisorPages
                   view={view}
                   announcements={announcements}
-                  projects={filteredProjects.slice(0, 4)}
-                  requests={requests}
+                  projects={advisorProjects}
+                  requests={advisorRequests}
                   selectedRequestId={selectedRequestId}
                   onSelectRequest={setSelectedRequestId}
                   onRequestDecision={handleRequestDecision}
-                  selectedProject={selectedProject}
+                  selectedProject={selectedAdvisorProject}
                   onSelectProject={setSelectedProjectId}
+                  onRemoveProject={handleRemoveProject}
+                  onAdvisorProfileSave={handleAdvisorProfileSave}
                   currentUser={currentUser}
                 />
               )}
@@ -437,8 +947,9 @@ function App() {
                 <AdminPages
                   view={view}
                   announcements={announcements}
-                  students={students}
+                  students={studentDirectory}
                   advisors={advisorAccounts}
+                  advisorProfiles={advisorProfiles}
                   projects={filteredProjects}
                   announcementForm={announcementForm}
                   onAnnouncementFormChange={setAnnouncementForm}
@@ -448,6 +959,10 @@ function App() {
                   advisorDirectory={advisors}
                   selectedProject={selectedProject}
                   onSelectProject={setSelectedProjectId}
+                  onAddStudent={handleAdminAddStudent}
+                  onSaveStudent={handleAdminStudentSave}
+                  onAddAdvisor={handleAdminAddAdvisor}
+                  onSaveAdvisor={handleAdminAdvisorSave}
                   currentUser={currentUser}
                 />
               )}
@@ -470,8 +985,10 @@ function StudentPages({
   view,
   announcements,
   projects,
+  discoverProjects,
   advisors,
   selectedProject,
+  selectedDiscoverProject,
   onSelectProject,
   onApplyToProject,
   onAdvisorRequest,
@@ -479,6 +996,14 @@ function StudentPages({
   onProjectFormChange,
   onCreateProject,
   currentUser,
+  incomingRequests,
+  selectedTeamRequest,
+  onSelectTeamRequest,
+  onTeamRequestDecision,
+  selectedAdvisorId,
+  onSelectAdvisor,
+  onStudentProfileSave,
+  studentDirectory,
 }) {
   if (view === "My Projects") {
     return (
@@ -486,6 +1011,13 @@ function StudentPages({
         <SectionTitle title="My Projects" subtitle="Browse project cards and open project details." />
         <ProjectGrid items={projects} onSelectProject={onSelectProject} onApplyToProject={onApplyToProject} />
         <ProjectDetailsCard project={selectedProject} />
+        <IncomingTeammateRequests
+          items={incomingRequests}
+          selectedRequest={selectedTeamRequest}
+          onSelectRequest={onSelectTeamRequest}
+          onDecision={onTeamRequestDecision}
+          studentDirectory={studentDirectory}
+        />
       </>
     );
   }
@@ -513,12 +1045,15 @@ function StudentPages({
   }
 
   if (view === "Find Advisor") {
+    const selectedAdvisor = advisors.find((advisor) => advisor.id === selectedAdvisorId) || null;
+
     return (
       <div className="card panel-card">
         <SectionTitle title="Find Advisor" subtitle="Search the list and send advisor requests." />
+        {selectedAdvisor ? <AdvisorProfileModal advisor={selectedAdvisor} onClose={() => onSelectAdvisor(null)} /> : null}
         <div className="advisor-list">
           {advisors.map((advisor) => (
-            <div className="advisor-row" key={advisor.id}>
+            <div className="advisor-row advisor-request-row" key={advisor.id}>
               <div className="avatar large">{advisor.name.slice(0, 2)}</div>
               <div className="advisor-meta">
                 <div className="advisor-name">{advisor.name}</div>
@@ -529,9 +1064,14 @@ function StudentPages({
               <span className={`badge ${advisor.available ? "green" : "amber"}`}>
                 {advisor.available ? "Available" : "Busy"}
               </span>
-              <button className="ghost-btn" type="button" onClick={() => onAdvisorRequest(advisor.name)}>
-                Send Request
-              </button>
+              <div className="advisor-request-actions">
+                <button className="ghost-btn" type="button" onClick={() => onSelectAdvisor(advisor.id)}>
+                  View Profile
+                </button>
+                <button className="primary-btn" type="button" onClick={() => onAdvisorRequest(advisor.name)}>
+                  Send Request
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -540,29 +1080,16 @@ function StudentPages({
   }
 
   if (view === "Profile") {
-    return (
-      <div className="card profile-card">
-        <SectionTitle title="Profile" subtitle="Static student profile summary for the demo." />
-        <ProfileRows
-          rows={[
-            ["Full Name", currentUser?.name || "Sevinc Yigit"],
-            ["Email", currentUser?.email || "sevinc.yigit@ogr.university.edu.tr"],
-            ["Department / Year", `${currentUser?.department || "Software Engineering"} / ${currentUser?.year || "3"}`],
-            ["Interests", "Artificial Intelligence, Machine Learning"],
-            ["Skills", "React, Python, UI/UX"],
-            ["GitHub", "github.com/sevincyigit"],
-            ["LinkedIn", "linkedin.com/in/sevincyigit"],
-          ]}
-        />
-      </div>
-    );
+    return <EditableStudentProfile currentUser={currentUser} onSave={onStudentProfileSave} />;
   }
 
   return (
     <>
       <StatsRow items={[["Total Projects", "4"], ["Pending Requests", "2"], ["Approved Projects", "3"], ["Rejected Projects", "1"]]} />
       <AnnouncementPanel items={announcements} />
-      <ProjectDetailsCard project={selectedProject} />
+      <SectionTitle title="Open Projects" subtitle="Browse other student projects and send a teammate request." />
+      <ProjectGrid items={discoverProjects} onSelectProject={onSelectProject} onApplyToProject={onApplyToProject} />
+      <ProjectDetailsCard project={selectedDiscoverProject} showOwnerProfile studentDirectory={studentDirectory} />
     </>
   );
 }
@@ -577,13 +1104,15 @@ function AdvisorPages({
   onRequestDecision,
   selectedProject,
   onSelectProject,
+  onRemoveProject,
+  onAdvisorProfileSave,
   currentUser,
 }) {
   if (view === "My Projects") {
     return (
       <>
-        <SectionTitle title="My Projects" subtitle="Advisor-side view of projects waiting for review." />
-        <ProjectGrid items={projects} onSelectProject={onSelectProject} compact />
+        <SectionTitle title="My Projects" subtitle="Here you can view the projects you've accepted." />
+        <ProjectGrid items={projects} onSelectProject={onSelectProject} compact hideStatus onRemoveProject={onRemoveProject} />
         <ProjectDetailsCard project={selectedProject} />
       </>
     );
@@ -706,22 +1235,7 @@ function AdvisorPages({
   }
 
   if (view === "Profile") {
-    return (
-      <div className="card profile-card">
-        <SectionTitle title="Advisor Profile" subtitle="Instructor profile shown to students." />
-        <ProfileRows
-          rows={[
-            ["Full Name", currentUser?.name || "Sila Korklubasoglu"],
-            ["Email", currentUser?.email || "sila.korklubasoglu@university.edu.tr"],
-            ["Department", currentUser?.department || "Software Engineering"],
-            ["Academic Title", currentUser?.title || "Professor"],
-            ["Areas of Expertise", "Machine Learning, Python, UI/UX"],
-            ["Research Interests", "Natural Language Processing, Computer Vision"],
-            ["Status", "Available for advising"],
-          ]}
-        />
-      </div>
-    );
+    return <EditableAdvisorProfile currentUser={currentUser} onSave={onAdvisorProfileSave} />;
   }
 
   return (
@@ -738,6 +1252,7 @@ function AdminPages({
   announcements,
   students,
   advisors,
+  advisorProfiles,
   projects,
   announcementForm,
   onAnnouncementFormChange,
@@ -747,85 +1262,24 @@ function AdminPages({
   advisorDirectory,
   selectedProject,
   onSelectProject,
+  onAddStudent,
+  onSaveStudent,
+  onAddAdvisor,
+  onSaveAdvisor,
 }) {
   if (view === "Manage Students") {
-    return (
-      <div className="card table-card">
-        <SectionTitle title="Manage Students" subtitle="Admin student table for quick review." />
-        <SimpleToolbar />
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Department</th>
-              <th>Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student) => (
-              <tr key={student.id}>
-                <td>{student.name}</td>
-                <td>{student.department}</td>
-                <td>{student.year}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
+    return <AdminStudentsPanel students={students} onAddStudent={onAddStudent} onSaveStudent={onSaveStudent} />;
   }
 
   if (view === "Manage Advisors") {
     return (
-      <>
-        <div className="card table-card">
-          <SectionTitle title="Manage Advisors" subtitle="Toggle account activity from the admin panel." />
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {advisors.map((advisor) => (
-                <tr key={advisor.id}>
-                  <td>{advisor.name}</td>
-                  <td>{advisor.department}</td>
-                  <td>{advisor.status}</td>
-                  <td>
-                    <button className="ghost-btn" type="button" onClick={() => onToggleAdvisorAccount(advisor.id)}>
-                      Toggle Status
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="card panel-card">
-          <SectionTitle title="Advisor Availability" subtitle="Directory view reflecting advising availability." />
-          <div className="advisor-list">
-            {advisorDirectory.map((advisor) => (
-              <div className="advisor-row" key={advisor.id}>
-                <div className="advisor-meta">
-                  <div className="advisor-name">{advisor.name}</div>
-                  <div className="muted">{advisor.department}</div>
-                </div>
-                <span className={`badge ${advisor.available ? "green" : "amber"}`}>
-                  {advisor.available ? "Available" : "Busy"}
-                </span>
-                <button className="ghost-btn" type="button" onClick={() => onToggleAdvisorAvailability(advisor.id)}>
-                  Toggle Availability
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </>
+      <AdminAdvisorsPanel
+        advisors={advisors}
+        advisorProfiles={advisorProfiles}
+        advisorDirectory={advisorDirectory}
+        onAddAdvisor={onAddAdvisor}
+        onSaveAdvisor={onSaveAdvisor}
+      />
     );
   }
 
@@ -852,6 +1306,264 @@ function AdminPages({
       <StatsRow items={[["Total Students", "140"], ["Total Advisors", "18"], ["Total Projects", `${projects.length}`]]} />
       <AnnouncementPanel items={announcements} />
       <ProjectDetailsCard project={selectedProject} />
+    </>
+  );
+}
+
+function AdminStudentsPanel({ students, onAddStudent, onSaveStudent }) {
+  const [selectedStudentEmail, setSelectedStudentEmail] = useState(students[0]?.email || null);
+  const [editingStudentEmail, setEditingStudentEmail] = useState(null);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+  const [addForm, setAddForm] = useState(() => buildStudentProfileForm(null));
+
+  React.useEffect(() => {
+    if (!students.length) {
+      setSelectedStudentEmail(null);
+      setEditingStudentEmail(null);
+      return;
+    }
+
+    if (!students.some((student) => student.email === selectedStudentEmail)) {
+      setSelectedStudentEmail(students[0].email);
+    }
+
+    if (editingStudentEmail && !students.some((student) => student.email === editingStudentEmail)) {
+      setEditingStudentEmail(null);
+    }
+  }, [students, selectedStudentEmail, editingStudentEmail]);
+
+  const selectedStudent = students.find((student) => student.email === selectedStudentEmail) || null;
+  const editingStudent = students.find((student) => student.email === editingStudentEmail) || null;
+
+  function updateAddField(key, value) {
+    setAddForm((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleAddSubmit(event) {
+    event.preventDefault();
+    onAddStudent(addForm);
+    setAddForm(buildStudentProfileForm(null));
+    setShowAddStudent(false);
+  }
+
+  return (
+    <>
+      <div className="card table-card">
+        <SectionTitle title="Manage Students" subtitle="Review student accounts and open profile details." />
+        <div className="toolbar admin-student-toolbar">
+          <input placeholder="Search" />
+          <select defaultValue="Department">
+            <option>Department</option>
+          </select>
+          <select defaultValue="Year">
+            <option>Year</option>
+          </select>
+          <button className="primary-btn" type="button" onClick={() => setShowAddStudent((value) => !value)}>
+            {showAddStudent ? "Close Add Student" : "Add Student"}
+          </button>
+        </div>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.map((student) => (
+              <tr key={student.email}>
+                <td>{student.name}</td>
+                <td>{student.department}</td>
+                <td>{student.year}</td>
+                <td className="table-actions">
+                  <button
+                    className="ghost-btn small-ghost-btn"
+                    type="button"
+                    onClick={() => {
+                      setSelectedStudentEmail(student.email);
+                      setEditingStudentEmail(null);
+                    }}
+                  >
+                    View Profile
+                  </button>
+                  <button
+                    className="primary-btn small"
+                    type="button"
+                    onClick={() => {
+                      setEditingStudentEmail(student.email);
+                      setSelectedStudentEmail(student.email);
+                    }}
+                  >
+                    Edit Profile
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {showAddStudent ? (
+        <form className="card form-card" onSubmit={handleAddSubmit}>
+          <div className="profile-editor-header">
+            <SectionTitle title="Add Student" subtitle="Create a new student account from the admin panel." />
+            <div className="profile-editor-actions">
+              <button className="ghost-btn" type="button" onClick={() => setShowAddStudent(false)}>
+                Cancel
+              </button>
+              <button className="primary-btn" type="submit">
+                Add Student
+              </button>
+            </div>
+          </div>
+          <div className="profile-editor-grid">
+            <InputField label="Full Name" value={addForm.name} onChange={(value) => updateAddField("name", value)} placeholder="Student name" />
+            <InputField label="Email" value={addForm.email} onChange={(value) => updateAddField("email", value)} placeholder="student@ogr.university.edu.tr" />
+            <InputField label="Department" value={addForm.department} onChange={(value) => updateAddField("department", value)} placeholder="Software Engineering" />
+            <InputField label="Year" value={addForm.year} onChange={(value) => updateAddField("year", value)} placeholder="3rd Year" />
+            <InputField label="Short Bio" value={addForm.shortBio} onChange={(value) => updateAddField("shortBio", value)} placeholder="Write a short bio." span textarea />
+            <InputField label="GitHub" value={addForm.github} onChange={(value) => updateAddField("github", value)} placeholder="github.com/username" span />
+            <InputField label="LinkedIn" value={addForm.linkedIn} onChange={(value) => updateAddField("linkedIn", value)} placeholder="linkedin.com/in/username" span />
+            <InputField label="Skills" value={addForm.skills} onChange={(value) => updateAddField("skills", value)} placeholder="React, Python, UI/UX" span />
+            <InputField label="Interests" value={addForm.interests} onChange={(value) => updateAddField("interests", value)} placeholder="AI, Web Development" span />
+          </div>
+        </form>
+      ) : null}
+
+      {selectedStudent && !editingStudent ? <StudentProfilePreviewCard student={selectedStudent} /> : null}
+      {editingStudent ? (
+        <AdminStudentEditForm
+          key={editingStudent.email}
+          student={editingStudent}
+          onSave={onSaveStudent}
+          onClose={() => setEditingStudentEmail(null)}
+        />
+      ) : null}
+    </>
+  );
+}
+
+function AdminAdvisorsPanel({ advisors, advisorProfiles, advisorDirectory, onAddAdvisor, onSaveAdvisor }) {
+  const [showAddAdvisor, setShowAddAdvisor] = useState(false);
+  const [editingAdvisorId, setEditingAdvisorId] = useState(null);
+  const [addForm, setAddForm] = useState({
+    name: "",
+    email: "",
+    department: "",
+    title: "Professor",
+    expertiseAreas: "",
+    researchInterests: "",
+    supervisedProjects: "",
+    status: "Active",
+  });
+
+  const editingAdvisor = advisorProfiles.find((advisor) => advisor.id === editingAdvisorId) || null;
+  const advisorDirectoryEntry = advisorDirectory.find((advisor) => advisor.id === editingAdvisorId) || null;
+
+  function updateAddField(key, value) {
+    setAddForm((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleAddSubmit(event) {
+    event.preventDefault();
+    onAddAdvisor(addForm);
+    setAddForm({
+      name: "",
+      email: "",
+      department: "",
+      title: "Professor",
+      expertiseAreas: "",
+      researchInterests: "",
+      supervisedProjects: "",
+      status: "Active",
+    });
+    setShowAddAdvisor(false);
+  }
+
+  return (
+    <>
+      <div className="card table-card">
+        <SectionTitle title="Manage Advisors" subtitle="Manage advisor accounts and update their status." />
+        <div className="toolbar admin-student-toolbar">
+          <input placeholder="Search" />
+          <select defaultValue="Department">
+            <option>Department</option>
+          </select>
+          <select defaultValue="Status">
+            <option>Status</option>
+          </select>
+          <button className="primary-btn" type="button" onClick={() => setShowAddAdvisor((value) => !value)}>
+            {showAddAdvisor ? "Close Add Advisor" : "Add Advisor"}
+          </button>
+        </div>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Advisor Name</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {advisors.map((advisor) => (
+              <tr key={advisor.id}>
+                <td>{advisor.name}</td>
+                <td>{advisor.department}</td>
+                <td>{advisor.status}</td>
+                <td>
+                  <button className="primary-btn small" type="button" onClick={() => setEditingAdvisorId(advisor.id)}>
+                    Edit Profile
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {showAddAdvisor ? (
+        <form className="card form-card" onSubmit={handleAddSubmit}>
+          <div className="profile-editor-header">
+            <SectionTitle title="Add Advisor" subtitle="Create a new advisor account from the admin panel." />
+            <div className="profile-editor-actions">
+              <button className="ghost-btn" type="button" onClick={() => setShowAddAdvisor(false)}>
+                Cancel
+              </button>
+              <button className="primary-btn" type="submit">
+                Add Advisor
+              </button>
+            </div>
+          </div>
+          <div className="profile-editor-grid">
+            <InputField label="Full Name" value={addForm.name} onChange={(value) => updateAddField("name", value)} placeholder="Advisor name" />
+            <InputField label="Email" value={addForm.email} onChange={(value) => updateAddField("email", value)} placeholder="advisor@university.edu.tr" />
+            <InputField label="Department" value={addForm.department} onChange={(value) => updateAddField("department", value)} placeholder="Software Engineering" />
+            <InputField label="Academic Title" value={addForm.title} onChange={(value) => updateAddField("title", value)} placeholder="Professor" />
+            <InputField label="Areas of Expertise" value={addForm.expertiseAreas} onChange={(value) => updateAddField("expertiseAreas", value)} placeholder="Machine Learning, Python" span />
+            <InputField label="Research Interests" value={addForm.researchInterests} onChange={(value) => updateAddField("researchInterests", value)} placeholder="NLP, Computer Vision" span />
+            <InputField label="Previously Supervised Project Types" value={addForm.supervisedProjects} onChange={(value) => updateAddField("supervisedProjects", value)} placeholder="AI Chatbot Systems, Image Processing Projects" span textarea />
+            <div className="field span-2">
+              <label>Status</label>
+              <select value={addForm.status} onChange={(event) => updateAddField("status", event.target.value)}>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      ) : null}
+
+      {editingAdvisor ? (
+        <AdminAdvisorEditForm
+          advisor={editingAdvisor}
+          directoryAdvisor={advisorDirectoryEntry}
+          onSave={onSaveAdvisor}
+          onClose={() => setEditingAdvisorId(null)}
+        />
+      ) : null}
     </>
   );
 }
@@ -892,7 +1604,7 @@ function AuthScreen({ loginForm, onLoginFormChange, onLogin }) {
             Sign In
           </button>
           <p className="auth-hint">
-            Demo accounts: sevinc.yigit@ogr.university.edu.tr, sila.korklubasoglu@university.edu.tr, admin@university.edu.tr
+            Demo accounts: sevinc.yigit@ogr.university.edu.tr, firdevs.su@ogr.university.edu.tr, sila.korklubasoglu@university.edu.tr, admin@university.edu.tr
           </p>
           <p className="auth-hint">All demo accounts use the password: 123456</p>
         </div>
@@ -920,7 +1632,7 @@ function AnnouncementPanel({ items }) {
   );
 }
 
-function ProjectGrid({ items, onSelectProject, onApplyToProject, compact = false }) {
+function ProjectGrid({ items, onSelectProject, onApplyToProject, compact = false, hideStatus = false, onRemoveProject = null }) {
   const palette = ["mint", "sand", "rose", "sky", "peach", "lilac"];
   return (
     <div className={`project-grid ${compact ? "compact-grid" : ""}`}>
@@ -932,11 +1644,16 @@ function ProjectGrid({ items, onSelectProject, onApplyToProject, compact = false
           </div>
           <p className="muted">{project.owner}</p>
           <div className="project-footer">
-            <span className="muted">{project.status}</span>
+            {!hideStatus ? <span className="muted">{project.status}</span> : <span />}
             <div className="inline-actions">
               <button className="ghost-btn" type="button" onClick={() => onSelectProject(project.id)}>
-                View Details
+                {compact ? "View Project" : "View Details"}
               </button>
+              {compact && onRemoveProject ? (
+                <button className="danger-btn small" type="button" onClick={() => onRemoveProject(project.id)}>
+                  Remove Project
+                </button>
+              ) : null}
               {!compact && (
                 <button className="primary-btn small" type="button" onClick={() => onApplyToProject(project)}>
                   Apply
@@ -950,7 +1667,7 @@ function ProjectGrid({ items, onSelectProject, onApplyToProject, compact = false
   );
 }
 
-function ProjectDetailsCard({ project }) {
+function ProjectDetailsCard({ project, showOwnerProfile = false, studentDirectory = [] }) {
   if (!project) return null;
 
   return (
@@ -970,11 +1687,23 @@ function ProjectDetailsCard({ project }) {
             <strong>Required Skills</strong>
             <div className="tag-list">
               {project.requiredSkills.map((skill) => (
-                <span className="tag" key={skill}>
+              <span className="tag" key={skill}>
                   {skill}
                 </span>
               ))}
             </div>
+            {project.interests?.length ? (
+              <>
+                <strong className="detail-subtitle">Interests</strong>
+                <div className="tag-list">
+                  {project.interests.map((interest) => (
+                    <span className="tag soft" key={interest}>
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              </>
+            ) : null}
           </div>
           <div className="detail-block detail-cardlet">
             <strong>Project Owner</strong>
@@ -985,8 +1714,503 @@ function ProjectDetailsCard({ project }) {
             <p>{project.teamMembers}</p>
           </div>
         </div>
+        {showOwnerProfile ? <ProjectOwnerCard project={project} studentDirectory={studentDirectory} /> : null}
       </div>
     </div>
+  );
+}
+
+function ProjectOwnerCard({ project, studentDirectory }) {
+  const ownerProfile = studentDirectory.find((student) => student.name === project.owner);
+
+  return (
+    <div className="detail-block owner-card">
+      <div className="owner-card-header">
+        <div className="avatar large">{initialsForName(project.owner)}</div>
+        <div>
+          <strong>{project.owner}</strong>
+          <p>{project.type} project owner</p>
+        </div>
+      </div>
+      <div className="profile-rows compact-profile-rows">
+        <div className="profile-row">
+          <span>Department / Year</span>
+          <strong>{ownerProfile ? `${ownerProfile.department} / ${ownerProfile.year}` : "Student project owner"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>Skills</span>
+          <strong>{ownerProfile?.skills?.join(", ") || project.requiredSkills.join(", ")}</strong>
+        </div>
+        <div className="profile-row">
+          <span>Interests</span>
+          <strong>{ownerProfile?.interests?.join(", ") || project.interests?.join(", ") || "Project collaboration"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>GitHub</span>
+          <strong>{ownerProfile?.github || project.ownerGithub || "github.com/project-owner"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>LinkedIn</span>
+          <strong>{ownerProfile?.linkedIn || project.ownerLinkedIn || "linkedin.com/in/project-owner"}</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function IncomingTeammateRequests({ items, selectedRequest, onSelectRequest, onDecision, studentDirectory }) {
+  if (!items.length) {
+    return (
+      <div className="card panel-card">
+        <SectionTitle title="Incoming Requests" subtitle="Requests from students who want to join your project." />
+        <div className="empty-state">You do not have any teammate requests yet.</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card panel-card">
+      <SectionTitle title="Incoming Requests" subtitle="Review the student profile before accepting or rejecting." />
+      <div className="incoming-request-layout">
+        <div className="incoming-request-list">
+          {items.map((request) => (
+            <button
+              className={`incoming-request-item ${selectedRequest?.id === request.id ? "selected" : ""}`}
+              key={request.id}
+              type="button"
+              onClick={() => onSelectRequest(request.id)}
+            >
+              <div>
+                <strong>{request.requesterName}</strong>
+                <p>{request.projectTitle}</p>
+              </div>
+              <span className={`badge ${request.status === "Accepted" ? "green" : request.status === "Rejected" ? "red" : "amber"}`}>
+                {request.status}
+              </span>
+            </button>
+          ))}
+        </div>
+        {selectedRequest ? <TeammateRequestProfileCard request={selectedRequest} onDecision={onDecision} studentDirectory={studentDirectory} /> : null}
+      </div>
+    </div>
+  );
+}
+
+function AdvisorProfileModal({ advisor, onClose }) {
+  return (
+    <div className="advisor-profile-overlay">
+      <div className="advisor-profile-card">
+        <div className="advisor-profile-topbar">
+          <div>
+            <p className="eyebrow muted-eyebrow">View Profile</p>
+            <h3>Advisor Profile</h3>
+          </div>
+          <button className="icon-btn close-btn" type="button" onClick={onClose}>
+            ×
+          </button>
+        </div>
+
+        <div className="advisor-profile-header">
+          <div className="avatar profile-avatar">{initialsForName(advisor.name)}</div>
+          <div>
+            <strong>{advisor.name}</strong>
+            <p>{advisor.department}</p>
+          </div>
+        </div>
+
+        <div className="profile-rows compact-profile-rows advisor-profile-rows">
+          <div className="profile-row">
+            <span>Department</span>
+            <strong>{advisor.department}</strong>
+          </div>
+          <div className="profile-row">
+            <span>Areas of Expertise</span>
+            <strong className="inline-tag-wrap">
+              {advisor.expertiseAreas.map((item) => (
+                <span className="tag soft" key={item}>
+                  {item}
+                </span>
+              ))}
+            </strong>
+          </div>
+          <div className="profile-row">
+            <span>Research Interests</span>
+            <strong>{advisor.researchInterests.join(", ")}</strong>
+          </div>
+          <div className="profile-row">
+            <span>Previously Supervised Project Types</span>
+            <strong>{advisor.supervisedProjects.join(", ")}</strong>
+          </div>
+          <div className="profile-row">
+            <span>Status</span>
+            <strong>
+              <span className={`badge ${advisor.available ? "green" : "amber"}`}>
+                {advisor.available ? "Active" : "Busy"}
+              </span>
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TeammateRequestProfileCard({ request, onDecision, studentDirectory }) {
+  const profile = studentDirectory.find((student) => student.name === request.requesterName);
+
+  return (
+    <div className="request-profile-card">
+      <div className="request-profile-header">
+        <div className="avatar profile-avatar">{initialsForName(request.requesterName)}</div>
+        <div>
+          <h3>{request.requesterName}</h3>
+          <p>You have received a teammate request for {request.projectTitle}.</p>
+        </div>
+      </div>
+
+      <div className="profile-rows compact-profile-rows">
+        <div className="profile-row">
+          <span>Department</span>
+          <strong>{profile?.department || "Software Engineering"} {profile?.year || "3rd Year"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>Skills</span>
+          <strong>{profile?.skills?.join(", ") || "React, UI/UX"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>Interests</span>
+          <strong>{profile?.interests?.join(", ") || "Web Development, AI"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>GitHub</span>
+          <strong>{profile?.github || "github.com/student"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>LinkedIn</span>
+          <strong>{profile?.linkedIn || "linkedin.com/in/student"}</strong>
+        </div>
+        <div className="profile-row">
+          <span>Note</span>
+          <strong>{request.note}</strong>
+        </div>
+      </div>
+
+      <div className="request-profile-actions">
+        <button className="primary-btn" type="button" onClick={() => onDecision(request.id, "Accepted")}>
+          Accept
+        </button>
+        <button className="danger-btn" type="button" onClick={() => onDecision(request.id, "Rejected")}>
+          Reject
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function EditableStudentProfile({ currentUser, onSave }) {
+  const [formState, setFormState] = useState(() => buildStudentProfileForm(currentUser));
+  const [isEditing, setIsEditing] = useState(false);
+
+  React.useEffect(() => {
+    setFormState(buildStudentProfileForm(currentUser));
+    setIsEditing(false);
+  }, [currentUser]);
+
+  if (!currentUser) return null;
+
+  function updateField(key, value) {
+    setFormState((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onSave(formState);
+    setIsEditing(false);
+  }
+
+  function handleCancel() {
+    setFormState(buildStudentProfileForm(currentUser));
+    setIsEditing(false);
+  }
+
+  return (
+    <form className="card profile-card" onSubmit={handleSubmit}>
+      <div className="profile-editor-header">
+        <SectionTitle title="Profile" subtitle="Keep your short bio and links up to date for teammates and advisors." />
+        <div className="profile-editor-actions">
+          {isEditing ? (
+            <>
+              <button className="ghost-btn" type="button" onClick={handleCancel}>
+                Cancel
+              </button>
+              <button className="primary-btn" type="submit">
+                Save Changes
+              </button>
+            </>
+          ) : (
+            <button className="primary-btn" type="button" onClick={() => setIsEditing(true)}>
+              Edit Profile
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="profile-editor-grid">
+        <InputField
+          label="Short Bio"
+          value={formState.shortBio}
+          onChange={(value) => updateField("shortBio", value)}
+          placeholder="Write a short bio about yourself."
+          disabled={!isEditing}
+          span
+          textarea
+        />
+        <InputField label="Full Name" value={formState.name} onChange={(value) => updateField("name", value)} placeholder="Sevinc Yigit" disabled={!isEditing} />
+        <InputField label="Email" value={formState.email} onChange={(value) => updateField("email", value)} placeholder="name@ogr.university.edu.tr" disabled={!isEditing} />
+        <InputField label="Department" value={formState.department} onChange={(value) => updateField("department", value)} placeholder="Software Engineering" disabled={!isEditing} />
+        <InputField label="Year" value={formState.year} onChange={(value) => updateField("year", value)} placeholder="3rd Year" disabled={!isEditing} />
+        <InputField label="GitHub" value={formState.github} onChange={(value) => updateField("github", value)} placeholder="github.com/username" disabled={!isEditing} span />
+        <InputField label="LinkedIn" value={formState.linkedIn} onChange={(value) => updateField("linkedIn", value)} placeholder="linkedin.com/in/username" disabled={!isEditing} span />
+        <InputField label="Skills" value={formState.skills} onChange={(value) => updateField("skills", value)} placeholder="React, Python, UI/UX" disabled={!isEditing} span />
+        <InputField label="Interests" value={formState.interests} onChange={(value) => updateField("interests", value)} placeholder="Artificial Intelligence, Machine Learning" disabled={!isEditing} span />
+      </div>
+    </form>
+  );
+}
+
+function EditableAdvisorProfile({ currentUser, onSave }) {
+  const [formState, setFormState] = useState(() => buildAdvisorProfileForm(currentUser));
+  const [isEditing, setIsEditing] = useState(false);
+
+  React.useEffect(() => {
+    setFormState(buildAdvisorProfileForm(currentUser));
+    setIsEditing(false);
+  }, [currentUser]);
+
+  if (!currentUser) return null;
+
+  function updateField(key, value) {
+    setFormState((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onSave(formState);
+    setIsEditing(false);
+  }
+
+  function handleCancel() {
+    setFormState(buildAdvisorProfileForm(currentUser));
+    setIsEditing(false);
+  }
+
+  return (
+    <form className="card profile-card" onSubmit={handleSubmit}>
+      <div className="profile-editor-header">
+        <SectionTitle title="Advisor Profile" subtitle="View and manage your personal information." />
+        <div className="profile-editor-actions">
+          {isEditing ? (
+            <>
+              <button className="ghost-btn" type="button" onClick={handleCancel}>
+                Cancel
+              </button>
+              <button className="primary-btn" type="submit">
+                Save Changes
+              </button>
+            </>
+          ) : (
+            <button className="primary-btn" type="button" onClick={() => setIsEditing(true)}>
+              Edit Profile
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="advisor-profile-form-grid">
+        <div className="advisor-avatar-panel">
+          <div className="avatar advisor-profile-avatar">{initialsForName(formState.name || currentUser.name)}</div>
+          <button className="ghost-btn small-ghost-btn" type="button" onClick={() => setIsEditing(true)}>
+            Edit Profile
+          </button>
+        </div>
+
+        <div className="advisor-profile-fields">
+          <div className="profile-editor-grid">
+            <InputField label="Full Name" value={formState.name} onChange={(value) => updateField("name", value)} placeholder="Prof. Selin Yuce" disabled={!isEditing} />
+            <InputField label="Email" value={formState.email} onChange={(value) => updateField("email", value)} placeholder="name@university.edu.tr" disabled={!isEditing} />
+            <InputField label="Department" value={formState.department} onChange={(value) => updateField("department", value)} placeholder="Software Engineering" disabled={!isEditing} />
+            <InputField label="Academic Title" value={formState.title} onChange={(value) => updateField("title", value)} placeholder="Professor" disabled={!isEditing} />
+            <InputField label="Areas of Expertise" value={formState.expertiseAreas} onChange={(value) => updateField("expertiseAreas", value)} placeholder="Machine Learning, Python, UI/UX" disabled={!isEditing} span />
+            <InputField label="Research Interests" value={formState.researchInterests} onChange={(value) => updateField("researchInterests", value)} placeholder="Natural Language Processing, Computer Vision" disabled={!isEditing} span />
+            <InputField label="Previously Supervised Project Types" value={formState.supervisedProjects} onChange={(value) => updateField("supervisedProjects", value)} placeholder="AI-based Chatbot Systems, Image Processing Projects" disabled={!isEditing} span textarea />
+          </div>
+
+          <div className="advisor-status-row">
+            <div>
+              <strong>Status</strong>
+              <p>{formState.available ? "Available for advising" : "Not available for advising"}</p>
+            </div>
+            <button
+              className={`status-toggle ${formState.available ? "on" : "off"} ${isEditing ? "" : "disabled"}`}
+              type="button"
+              aria-pressed={formState.available}
+              onClick={() => {
+                if (!isEditing) return;
+                updateField("available", !formState.available);
+              }}
+            >
+              <span className="status-toggle-track">
+                <span className="status-toggle-thumb" />
+              </span>
+              <span className="status-toggle-label">{formState.available ? "On" : "Off"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+function StudentProfilePreviewCard({ student }) {
+  return (
+    <div className="card profile-card">
+      <SectionTitle title="View Profile" subtitle="Student profile details visible to the admin." />
+      <ProfileRows
+        rows={[
+          ["Short Bio", student.shortBio || "No short bio added yet."],
+          ["Full Name", student.name],
+          ["Email", student.email],
+          ["Department / Year", `${student.department} / ${student.year}`],
+          ["Skills", student.skills?.join(", ") || "-"],
+          ["Interests", student.interests?.join(", ") || "-"],
+          ["GitHub", student.github || "-"],
+          ["LinkedIn", student.linkedIn || "-"],
+        ]}
+      />
+    </div>
+  );
+}
+
+function AdminStudentEditForm({ student, onSave, onClose }) {
+  const [formState, setFormState] = useState(() => buildStudentProfileForm(student));
+
+  function updateField(key, value) {
+    setFormState((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onSave(student.email, formState);
+    onClose();
+  }
+
+  return (
+    <form className="card profile-card" onSubmit={handleSubmit}>
+      <div className="profile-editor-header">
+        <SectionTitle title="Edit Profile" subtitle="Update the selected student profile." />
+        <div className="profile-editor-actions">
+          <button className="ghost-btn" type="button" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="primary-btn" type="submit">
+            Save Changes
+          </button>
+        </div>
+      </div>
+
+      <div className="profile-editor-grid">
+        <InputField
+          label="Short Bio"
+          value={formState.shortBio}
+          onChange={(value) => updateField("shortBio", value)}
+          placeholder="Write a short bio about the student."
+          span
+          textarea
+        />
+        <InputField label="Full Name" value={formState.name} onChange={(value) => updateField("name", value)} placeholder="Student name" />
+        <InputField label="Email" value={formState.email} onChange={(value) => updateField("email", value)} placeholder="student@ogr.university.edu.tr" />
+        <InputField label="Department" value={formState.department} onChange={(value) => updateField("department", value)} placeholder="Software Engineering" />
+        <InputField label="Year" value={formState.year} onChange={(value) => updateField("year", value)} placeholder="3rd Year" />
+        <InputField label="GitHub" value={formState.github} onChange={(value) => updateField("github", value)} placeholder="github.com/username" span />
+        <InputField label="LinkedIn" value={formState.linkedIn} onChange={(value) => updateField("linkedIn", value)} placeholder="linkedin.com/in/username" span />
+        <InputField label="Skills" value={formState.skills} onChange={(value) => updateField("skills", value)} placeholder="React, Python, UI/UX" span />
+        <InputField label="Interests" value={formState.interests} onChange={(value) => updateField("interests", value)} placeholder="AI, Web Development" span />
+      </div>
+    </form>
+  );
+}
+
+function AdminAdvisorEditForm({ advisor, directoryAdvisor, onSave, onClose }) {
+  const [formState, setFormState] = useState(() => ({
+    name: advisor.name || "",
+    email: advisor.email || "",
+    department: advisor.department || "",
+    title: advisor.title || "",
+    expertiseAreas: (advisor.expertiseAreas || []).join(", "),
+    researchInterests: (advisor.researchInterests || []).join(", "),
+    supervisedProjects: (advisor.supervisedProjects || []).join(", "),
+    status: advisor.available ? "Active" : "Inactive",
+  }));
+
+  function updateField(key, value) {
+    setFormState((previous) => ({ ...previous, [key]: value }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onSave(advisor.id, formState);
+    onClose();
+  }
+
+  return (
+    <form className="card profile-card" onSubmit={handleSubmit}>
+      <div className="profile-editor-header">
+        <SectionTitle title="Manage Advisor Profile" subtitle="Update all advisor details from the admin panel." />
+        <div className="profile-editor-actions">
+          <button className="ghost-btn" type="button" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="primary-btn" type="submit">
+            Save Changes
+          </button>
+        </div>
+      </div>
+
+      <div className="advisor-profile-form-grid">
+        <div className="advisor-avatar-panel">
+          <div className="avatar advisor-profile-avatar">{initialsForName(formState.name || advisor.name)}</div>
+          <button className="ghost-btn small-ghost-btn" type="button">
+            Change Photo
+          </button>
+        </div>
+
+        <div className="advisor-profile-fields">
+          <div className="profile-editor-grid">
+            <InputField label="Full Name" value={formState.name} onChange={(value) => updateField("name", value)} placeholder="Enter the full name" />
+            <InputField label="Email" value={formState.email} onChange={(value) => updateField("email", value)} placeholder="advisor@university.edu.tr" />
+            <InputField label="Department" value={formState.department} onChange={(value) => updateField("department", value)} placeholder="Department" />
+            <InputField label="Academic Title" value={formState.title} onChange={(value) => updateField("title", value)} placeholder="Academic Title" />
+            <InputField label="Areas of Expertise" value={formState.expertiseAreas} onChange={(value) => updateField("expertiseAreas", value)} placeholder="Machine Learning, Python, Data Science" span />
+            <InputField label="Research Interests" value={formState.researchInterests} onChange={(value) => updateField("researchInterests", value)} placeholder="Natural Language Processing, Computer Vision" span />
+            <InputField label="Previously Supervised Project Types" value={formState.supervisedProjects} onChange={(value) => updateField("supervisedProjects", value)} placeholder="AI-based Chatbot Systems, Image Processing Projects" span textarea />
+          </div>
+
+          <div className="advisor-status-edit-grid">
+            <div className="profile-row">
+              <span>Directory Availability</span>
+              <strong>{directoryAdvisor?.available ? "Available" : "Busy"}</strong>
+            </div>
+            <div className="field">
+              <label>Status</label>
+              <select value={formState.status} onChange={(event) => updateField("status", event.target.value)}>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   );
 }
 
@@ -1016,14 +2240,49 @@ function ProfileRows({ rows }) {
   );
 }
 
-function InputField({ label, value, onChange, placeholder, span = false, textarea = false }) {
+function buildStudentProfileForm(currentUser) {
+  return {
+    name: currentUser?.name || "",
+    email: currentUser?.email || "",
+    department: currentUser?.department || "",
+    year: currentUser?.year || "",
+    shortBio: currentUser?.shortBio || "",
+    github: currentUser?.github || "",
+    linkedIn: currentUser?.linkedIn || "",
+    skills: (currentUser?.skills || []).join(", "),
+    interests: (currentUser?.interests || []).join(", "),
+  };
+}
+
+function buildAdvisorProfileForm(currentUser) {
+  return {
+    name: currentUser?.name || "",
+    email: currentUser?.email || "",
+    department: currentUser?.department || "",
+    title: currentUser?.title || "",
+    expertiseAreas: (currentUser?.expertiseAreas || []).join(", "),
+    researchInterests: (currentUser?.researchInterests || []).join(", "),
+    supervisedProjects: (currentUser?.supervisedProjects || []).join(", "),
+    available: currentUser?.available ?? true,
+  };
+}
+
+function normalizeCommaSeparatedList(value) {
+  if (Array.isArray(value)) return value;
+  return String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function InputField({ label, value, onChange, placeholder, span = false, textarea = false, disabled = false }) {
   return (
     <div className={`field ${span ? "span-2" : ""}`}>
       <label>{label}</label>
       {textarea ? (
-        <textarea rows="5" value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
+        <textarea rows="5" value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} disabled={disabled} />
       ) : (
-        <input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
+        <input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} disabled={disabled} />
       )}
     </div>
   );
@@ -1072,7 +2331,7 @@ function labelForRole(role) {
 }
 
 function profileNameForRole(role) {
-  if (role === "advisor") return "Sila Korklubasoglu";
+  if (role === "advisor") return "Prof. Selin Yuce";
   if (role === "admin") return "System Admin";
   return "Sevinc Yigit";
 }

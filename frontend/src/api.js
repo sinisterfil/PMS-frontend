@@ -52,6 +52,29 @@ export const updateMe = (payload) =>
     method: "PATCH",
     body: JSON.stringify(payload),
   });
+export const getStudentById = (id) => request(`/users/students/${id}`);
+export const createStudent = (payload) =>
+  request("/users/students", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+export const updateStudent = (id, payload) =>
+  request(`/users/students/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+
+export const getAdvisorById = (id) => request(`/users/advisors/${id}`);
+export const createAdvisor = (payload) =>
+  request("/users/advisors", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+export const updateAdvisor = (id, payload) =>
+  request(`/users/advisors/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
 
 export const getProjects = (search = "") =>
   request(`/projects${search ? `?search=${encodeURIComponent(search)}` : ""}`);
@@ -62,9 +85,10 @@ export const createProject = (payload) =>
     body: JSON.stringify(payload),
   });
 
-export const applyToProject = (projectId) =>
+export const applyToProject = (projectId, note = "") =>
   request(`/projects/${projectId}/apply`, {
     method: "POST",
+    body: JSON.stringify({ note }),
   });
 
 export const getProjectApplications = (projectId) =>
@@ -80,6 +104,14 @@ export const getAdvisors = (search = "") =>
   request(`/advisors${search ? `?search=${encodeURIComponent(search)}` : ""}`);
 
 export const getAdvisorAccounts = () => request("/advisors/accounts");
+export const toggleAdvisorStatus = (id) =>
+  request(`/advisors/${id}/toggle-status`, {
+    method: "PATCH",
+  });
+export const toggleAdvisorAvailability = (id) =>
+  request(`/advisors/${id}/toggle-availability`, {
+    method: "PATCH",
+  });
 
 export const sendAdvisorRequest = (advisorId, projectId, message = "") =>
   request(`/advisors/${advisorId}/request`, {

@@ -524,8 +524,8 @@ function enrichAdvisorRequestsWithMocks(items, projects = [], currentUser = null
       advisorPreference: currentUser?.name || fallback?.advisorPreference || "-",
       requestedDate: fallback?.requestedDate || request.created_at || "-",
       requiredSkills: projectSkills,
-      year: fallback?.year || "-",
-      department: fallback?.department || "-",
+      year: request.year || fallback?.year || "-",
+      department: request.department || fallback?.department || "-",
     };
   });
 }
@@ -549,8 +549,8 @@ function buildTeamRequestsFromApplications(applicationsByProject, studentRecords
         year: formatYearLabel(application.year_level || fallback?.year || ""),
         github: application.github_link || fallback?.github || "",
         linkedIn: application.linkedin_link || fallback?.linkedIn || "",
-        skills: fallback?.skills || [],
-        interests: fallback?.interests || [],
+        skills: application.skills || fallback?.skills || [],
+        interests: application.interests || fallback?.interests || [],
       };
     }),
   );

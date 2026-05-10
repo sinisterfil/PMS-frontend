@@ -134,3 +134,14 @@ export const createAnnouncement = (payload) =>
   });
 
 export const getStudents = () => request("/users/students");
+
+export const adminUpdateProject = (id, payload) =>
+  request(`/projects/${id}/admin`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+
+export const adminDeleteProject = (id) =>
+  request(`/projects/${id}/admin`, {
+    method: "DELETE",
+  });

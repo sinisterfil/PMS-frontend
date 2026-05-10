@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
+  adminDeleteProject,
+  adminUpdateProject,
   applyToProject,
   clearToken,
   createAnnouncement,
@@ -578,7 +580,7 @@ async function fetchAdvisorDirectory(search = "") {
   const advisorDetails = await Promise.all(
     advisors.map(async (advisor) => {
       try {
-        const detail = await getAdvisorById(advisor.id);
+        const detail = await getAdvisorById(advisor.user_id || advisor.id);
         return { ...detail, profile_id: advisor.id };
       } catch {
         return advisor;
@@ -1015,13 +1017,37 @@ function App() {
     }
   }
 
-  function handleRemoveProject() {
-    setMessage("Project removal is not connected here because the current backend only supports student-owned deletes.");
+  async function handleRemoveProject(projectId) {
+    if (role !== "admin") {
+      setMessage("Project removal is only available to administrators.");
+      return;
+    }
+    try {
+      await adminDeleteProject(projectId);
+      setProjects((previous) => previous.filter((project) => project.id !== projectId));
+      setMessage("Project deleted.");
+    } catch (error) {
+      setMessage(error.message || "Project could not be deleted.");
+    }
   }
 
-  function handleAdminProjectSave() {
-    setMessage("Admin project editing is not connected because the backend does not expose an admin project update endpoint.");
-    return false;
+  async function handleAdminProjectSave(id, formState) {
+    try {
+      await adminUpdateProject(id, {
+        title: formState.title,
+        description: formState.description,
+        type: formState.type,
+        teamMembers: Number(formState.teamMembers) || undefined,
+        skills: normalizeCommaSeparatedList(formState.requiredSkills),
+      });
+      const refreshedProjects = await getProjects();
+      setProjects(enrichProjectsWithMocks(refreshedProjects));
+      setMessage(`Project "${formState.title}" updated.`);
+      return true;
+    } catch (error) {
+      setMessage(error.message || "Project could not be updated.");
+      return false;
+    }
   }
 
   async function toggleAdvisorAccount(id) {

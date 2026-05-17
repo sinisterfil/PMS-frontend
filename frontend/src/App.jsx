@@ -6,12 +6,14 @@ import {
   clearToken,
   createAnnouncement,
   createAdvisor,
+  createCategory,
   createProject,
   createStudent,
   getAdvisorById,
   getAdvisorAccounts,
   getAdvisors,
   getAnnouncements,
+  getCategories,
   getMe,
   getProjectApplications,
   getProjects,
@@ -575,6 +577,14 @@ function mergeStudentDirectoryRecords(items) {
   return Array.from(map.values());
 }
 
+function normalizeCategoryList(items) {
+  return items.map((category) => ({
+    key: category.name,
+    label: category.name,
+    deadline: "-",
+  }));
+}
+
 async function fetchAdvisorDirectory(search = "") {
   const advisors = await getAdvisors(search);
   const advisorDetails = await Promise.all(
@@ -615,6 +625,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [projectApplicationTarget, setProjectApplicationTarget] = useState(null);
   const [projectApplicationNote, setProjectApplicationNote] = useState("");
+  const [projectCategories, setProjectCategories] = useState(normalizeCategoryList([{ name: "Course Project" }, { name: "TUBITAK" }, { name: "Teknofest" }]));
 
   const selectedProject = projects.find((project) => project.id === selectedProjectId) || null;
   const normalizedSearch = searchText.trim().toLowerCase();
@@ -680,18 +691,29 @@ function App() {
   }
 
   async function loadAppData(user) {
-    const [projectItems, announcementItems] = await Promise.all([
+    const [projectItems, announcementItems, categoryItems] = await Promise.all([
       getProjects(),
       getAnnouncements(),
+      getCategories(),
     ]);
 
     const nextProjects = enrichProjectsWithMocks(projectItems);
+    const nextCategories = normalizeCategoryList(categoryItems);
     setProjects(nextProjects);
     setAnnouncements(announcementItems);
+    setProjectCategories(nextCategories);
     setSelectedProjectId((previous) => {
       if (previous && nextProjects.some((project) => project.id === previous)) return previous;
       return nextProjects[0]?.id || null;
     });
+    setProjectForm((previous) => ({
+      ...previous,
+      type: nextCategories.some((category) => category.key === previous.type) ? previous.type : nextCategories[0]?.key || "Course Project",
+    }));
+    setAnnouncementForm((previous) => ({
+      ...previous,
+      category: nextCategories.some((category) => category.key === previous.category) ? previous.category : nextCategories[0]?.key || "Course Project",
+    }));
 
     if (user.role === "student") {
       const advisorItems = await fetchAdvisorDirectory();
@@ -745,6 +767,35 @@ function App() {
       setAdvisors(nextAdvisors);
       setAdvisorProfiles(nextAdvisors);
       setAdvisorAccounts(buildAdvisorAccounts(advisorAccountsFromApi, nextAdvisors));
+    }
+  }
+
+  async function handleAddCategory(formState) {
+    const name = String(formState.name || "").trim();
+    const description = String(formState.description || "").trim();
+
+    if (!name) {
+      setMessage("Category name is required.");
+      return false;
+    }
+
+    try {
+      await createCategory({ name, description });
+      const nextCategories = normalizeCategoryList(await getCategories());
+      setProjectCategories(nextCategories);
+      setProjectForm((previous) => ({
+        ...previous,
+        type: previous.type || nextCategories[0]?.key || "Course Project",
+      }));
+      setAnnouncementForm((previous) => ({
+        ...previous,
+        category: previous.category || nextCategories[0]?.key || "Course Project",
+      }));
+      setMessage(`Category "${name}" added successfully.`);
+      return true;
+    } catch (error) {
+      setMessage(error.message || "Category could not be added.");
+      return false;
     }
   }
 
@@ -1240,6 +1291,7 @@ function App() {
                   onProjectApplicationNoteChange={setProjectApplicationNote}
                   onSubmitProjectApplication={submitProjectApplication}
                   onCloseProjectApplication={() => setProjectApplicationTarget(null)}
+                  projectCategories={projectCategories}
                 />
               )}
 
@@ -1283,6 +1335,8 @@ function App() {
                   currentUser={currentUser}
                   onSaveProject={handleAdminProjectSave}
                   onDeleteProject={handleRemoveProject}
+                  projectCategories={projectCategories}
+                  onAddCategory={handleAddCategory}
                 />
               )}
             </div>
@@ -1330,6 +1384,7 @@ function StudentPages({
   onProjectApplicationNoteChange,
   onSubmitProjectApplication,
   onCloseProjectApplication,
+  projectCategories = [],
 }) {
   const [studentProjectModalId, setStudentProjectModalId] = useState(null);
   const [discoverProjectModalId, setDiscoverProjectModalId] = useState(null);
@@ -1392,7 +1447,7 @@ function StudentPages({
           <InputField label="Project Title" value={projectForm.title} onChange={(value) => onProjectFormChange({ ...projectForm, title: value })} placeholder="AI-Based Smart Agriculture System" span />
           <InputField label="Description" value={projectForm.description} onChange={(value) => onProjectFormChange({ ...projectForm, description: value })} placeholder="Briefly explain your project idea and goals." span textarea />
           <SelectField label="Field" value={projectForm.field} onChange={(value) => onProjectFormChange({ ...projectForm, field: value })} options={["Software Engineering", "Computer Engineering"]} />
-          <SelectField label="Type" value={projectForm.type} onChange={(value) => onProjectFormChange({ ...projectForm, type: value })} options={["Course Project", "TUBITAK", "Teknofest"]} />
+          <SelectField label="Type" value={projectForm.type} onChange={(value) => onProjectFormChange({ ...projectForm, type: value })} options={projectCategories.map((category) => category.key)} />
           <InputField label="Team Members" value={projectForm.teamMembers} onChange={(value) => onProjectFormChange({ ...projectForm, teamMembers: value })} placeholder="4" />
           <InputField label="Required Skills" value={projectForm.skills} onChange={(value) => onProjectFormChange({ ...projectForm, skills: value })} placeholder="React, Node.js, UI/UX" span />
         </div>
@@ -1791,6 +1846,8 @@ function AdminPages({
   onSaveAdvisor,
   onSaveProject,
   onDeleteProject,
+  projectCategories,
+  onAddCategory,
 }) {
   if (view === "Manage Students") {
     return <AdminStudentsPanel students={students} onAddStudent={onAddStudent} onSaveStudent={onSaveStudent} />;
@@ -1814,7 +1871,7 @@ function AdminPages({
         <SectionTitle title="Create Announcement" subtitle="Publishing adds a new announcement to the dashboard." />
         <div className="form-grid">
           <InputField label="Title" value={announcementForm.title} onChange={(value) => onAnnouncementFormChange({ ...announcementForm, title: value })} placeholder="Course Project Group Formation Deadline" span />
-          <SelectField label="Category" value={announcementForm.category} onChange={(value) => onAnnouncementFormChange({ ...announcementForm, category: value })} options={["Course Project", "TUBITAK", "Teknofest"]} span />
+          <SelectField label="Category" value={announcementForm.category} onChange={(value) => onAnnouncementFormChange({ ...announcementForm, category: value })} options={projectCategories.map((category) => category.key)} span />
           <InputField label="Announcement" value={announcementForm.body} onChange={(value) => onAnnouncementFormChange({ ...announcementForm, body: value })} placeholder="Write the announcement details..." span textarea />
         </div>
         <div className="actions">
@@ -1833,6 +1890,8 @@ function AdminPages({
         onSelectProject={onSelectProject}
         onSaveProject={onSaveProject}
         onDeleteProject={onDeleteProject}
+        projectCategories={projectCategories}
+        onAddCategory={onAddCategory}
       />
     );
   }
@@ -1845,12 +1904,16 @@ function AdminPages({
   );
 }
 
-function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDeleteProject }) {
+function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDeleteProject, projectCategories, onAddCategory }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [categorySearch, setCategorySearch] = useState("");
+  const [showAddCategory, setShowAddCategory] = useState(false);
+  const [categoryForm, setCategoryForm] = useState({ name: "", description: "" });
 
-  const projectCategories = adminProjectCategories.map((category) => {
+  const categoriesWithAll = [{ key: "ALL", label: "All Projects", deadline: "-" }, ...projectCategories];
+
+  const adminCategories = categoriesWithAll.map((category) => {
     const items =
       category.key === "ALL"
         ? projects
@@ -1864,7 +1927,7 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
   });
 
   const activeCategory =
-    projectCategories.find((category) => category.key === selectedCategory) || projectCategories[0];
+    adminCategories.find((category) => category.key === selectedCategory) || adminCategories[0];
   const normalizedSearch = categorySearch.trim().toLowerCase();
   const visibleProjects = activeCategory.items.filter((project) => {
     if (!normalizedSearch) return true;
@@ -1877,18 +1940,18 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
     null;
 
   React.useEffect(() => {
-    if (!selectedCategory && projectCategories[0]) {
-      setSelectedCategory(projectCategories[0].key);
+    if (!selectedCategory && adminCategories[0]) {
+      setSelectedCategory(adminCategories[0].key);
     }
 
-    if (selectedCategory && !projectCategories.some((category) => category.key === selectedCategory)) {
-      setSelectedCategory(projectCategories[0]?.key || null);
+    if (selectedCategory && !adminCategories.some((category) => category.key === selectedCategory)) {
+      setSelectedCategory(adminCategories[0]?.key || null);
     }
 
     if (editingProjectId && !projects.some((project) => project.id === editingProjectId)) {
       setEditingProjectId(null);
     }
-  }, [selectedCategory, projectCategories, editingProjectId, projects]);
+  }, [selectedCategory, adminCategories, editingProjectId, projects]);
 
   return (
     <>
@@ -1897,7 +1960,7 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
 
         <div className="toolbar admin-project-toolbar">
           <div className="admin-project-tabs" role="tablist" aria-label="Project categories">
-            {projectCategories.map((category) => (
+            {adminCategories.map((category) => (
               <button
                 key={category.key}
                 className={`admin-project-tab-button ${activeCategory.key === category.key ? "active" : ""}`}
@@ -1915,7 +1978,7 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
               onChange={(event) => setCategorySearch(event.target.value)}
               placeholder="Search"
             />
-            <button className="primary-btn" type="button">
+            <button className="primary-btn" type="button" onClick={() => setShowAddCategory(true)}>
               Add Category
             </button>
           </div>
@@ -1966,6 +2029,57 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
         {!visibleProjects.length ? <div className="empty-state">No projects matched this category search.</div> : null}
       </div>
 
+      {showAddCategory ? (
+        <div className="admin-panel-overlay">
+          <div className="admin-panel-sheet">
+            <div className="admin-panel-topbar">
+              <div>
+                <p className="eyebrow muted-eyebrow">Add Category</p>
+                <h3>Create Project Category</h3>
+              </div>
+              <button className="icon-btn close-btn" type="button" onClick={() => setShowAddCategory(false)}>
+                ×
+              </button>
+            </div>
+            <form
+              className="profile-card embedded-profile-card"
+              onSubmit={async (event) => {
+                event.preventDefault();
+                const saved = await onAddCategory(categoryForm);
+                if (!saved) return;
+                setCategoryForm({ name: "", description: "" });
+                setShowAddCategory(false);
+              }}
+            >
+              <div className="profile-editor-grid">
+                <InputField
+                  label="Category Name"
+                  value={categoryForm.name}
+                  onChange={(value) => setCategoryForm((previous) => ({ ...previous, name: value }))}
+                  placeholder="New category"
+                />
+                <InputField
+                  label="Description"
+                  value={categoryForm.description}
+                  onChange={(value) => setCategoryForm((previous) => ({ ...previous, description: value }))}
+                  placeholder="Optional description"
+                  span
+                  textarea
+                />
+              </div>
+              <div className="profile-editor-actions">
+                <button className="ghost-btn" type="button" onClick={() => setShowAddCategory(false)}>
+                  Cancel
+                </button>
+                <button className="primary-btn" type="submit">
+                  Add Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : null}
+
       {editingProject ? (
         <div className="admin-panel-overlay">
           <div className="admin-panel-sheet">
@@ -1985,6 +2099,7 @@ function AdminProjectsPanel({ projects, onSelectProject, onSaveProject, onDelete
               onSave={onSaveProject}
               onClose={() => setEditingProjectId(null)}
               embedded
+              projectCategories={projectCategories}
             />
           </div>
         </div>
@@ -3081,7 +3196,7 @@ function AdminAdvisorEditForm({ advisor, directoryAdvisor, onSave, onClose, embe
   );
 }
 
-function AdminProjectEditForm({ project, onSave, onClose, embedded = false }) {
+function AdminProjectEditForm({ project, onSave, onClose, embedded = false, projectCategories = [] }) {
   const [formState, setFormState] = useState(() => ({
     title: project.title || "",
     owner: project.owner || "",
@@ -3129,7 +3244,7 @@ function AdminProjectEditForm({ project, onSave, onClose, embedded = false }) {
           label="Project Type"
           value={formState.type}
           onChange={(value) => updateField("type", value)}
-          options={adminProjectCategories.map((category) => category.key)}
+          options={projectCategories.map((category) => category.key)}
         />
         <SelectField
           label="Status"

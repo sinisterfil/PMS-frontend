@@ -133,6 +133,13 @@ export const createAnnouncement = (payload) =>
     body: JSON.stringify(payload),
   });
 
+export const getCategories = () => request("/categories");
+export const createCategory = (payload) =>
+  request("/categories", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+
 export const getStudents = () => request("/users/students");
 
 export const adminUpdateProject = (id, payload) =>

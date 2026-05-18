@@ -20,6 +20,7 @@ import {
   getRequests,
   getStudentById,
   getStudents,
+  getMyApplications,
   hasToken,
   login,
   sendAdvisorRequest,
@@ -626,7 +627,8 @@ function App() {
   const [projectApplicationTarget, setProjectApplicationTarget] = useState(null);
   const [projectApplicationNote, setProjectApplicationNote] = useState("");
   const [projectCategories, setProjectCategories] = useState(normalizeCategoryList([{ name: "Course Project" }, { name: "TUBITAK" }, { name: "Teknofest" }]));
-
+  const [myApplications, setMyApplications] = useState([]);
+  
   const selectedProject = projects.find((project) => project.id === selectedProjectId) || null;
   const normalizedSearch = searchText.trim().toLowerCase();
 
@@ -718,7 +720,9 @@ function App() {
     if (user.role === "student") {
       const advisorItems = await fetchAdvisorDirectory();
       setAdvisors(advisorItems);
-
+      const myApps = await getMyApplications().catch(() => []);
+      setMyApplications(myApps);
+      
       const ownedProjects = nextProjects.filter((project) => project.owner === user.name);
       const applicationBundles = await Promise.all(
         ownedProjects.map(async (project) => ({
@@ -1292,6 +1296,7 @@ function App() {
                   onSubmitProjectApplication={submitProjectApplication}
                   onCloseProjectApplication={() => setProjectApplicationTarget(null)}
                   projectCategories={projectCategories}
+                  myApplications={myApplications}
                 />
               )}
 
@@ -1385,6 +1390,7 @@ function StudentPages({
   onSubmitProjectApplication,
   onCloseProjectApplication,
   projectCategories = [],
+  myApplications = [],
 }) {
   const [studentProjectModalId, setStudentProjectModalId] = useState(null);
   const [discoverProjectModalId, setDiscoverProjectModalId] = useState(null);
@@ -1413,6 +1419,24 @@ function StudentPages({
           onDecision={onTeamRequestDecision}
           studentDirectory={studentDirectory}
         />
+        {myApplications.length > 0 && (
+          <div className="card panel-card">
+            <SectionTitle title="My Applications" subtitle="Projects you have applied to join." />
+            <div className="announcement-list">
+              {myApplications.map((app) => (
+                <div className="announcement-item" key={app.id}>
+                  <div>
+                    <div className="announcement-title">{app.project_title}</div>
+                    <p>{app.type} • Owner: {app.owner_name}</p>
+                  </div>
+                  <span className={`badge ${app.status === "Accepted" ? "green" : app.status === "Rejected" ? "red" : "amber"}`}>
+                    {app.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {activeStudentProject ? (
           <div className="admin-panel-overlay">
             <div className="admin-panel-sheet">

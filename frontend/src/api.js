@@ -140,6 +140,8 @@ export const createCategory = (payload) =>
     body: JSON.stringify(payload),
   });
 
+export const getMyApplications = () => request("/projects/my-applications");
+
 export const getStudents = () => request("/users/students");
 
 export const adminUpdateProject = (id, payload) =>

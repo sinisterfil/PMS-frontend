@@ -2651,7 +2651,20 @@ function ProjectDetailsCard({
 }
 
 function ProjectOwnerCard({ project, studentDirectory }) {
-  const ownerProfile = studentDirectory.find((student) => student.name === project.owner);
+  const [ownerProfile, setOwnerProfile] = useState(
+    studentDirectory.find((student) => student.name === project.owner) || null
+  );
+
+  useEffect(() => {
+    const local = studentDirectory.find((student) => student.name === project.owner);
+    if (local) {
+      setOwnerProfile(local);
+      return;
+    }
+    getStudentById && getStudentById(project.ownerId || "")
+      .then((data) => setOwnerProfile(buildStudentRecord(data)))
+      .catch(() => {});
+  }, [project.owner, studentDirectory]);
 
   return (
     <div className="detail-block owner-card">
@@ -2687,7 +2700,6 @@ function ProjectOwnerCard({ project, studentDirectory }) {
     </div>
   );
 }
-
 function IncomingTeammateRequests({ items, selectedRequest, onSelectRequest, onDecision, studentDirectory }) {
   if (!items.length) {
     return (
